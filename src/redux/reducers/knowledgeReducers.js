@@ -34,19 +34,17 @@ const knowledgeReducer = (state = initialState, action) => {
   //     ...state,
   //     knowledges: state.knowledges.filter(item => item.id !== action.id),
   //   }
-  // } else if (action.type === 'UPDATE') {
-  //   // payload-ruu action-iin payload-iig zadlaj hiine
-  //   // doorh bichiglel ni const payload = action.payload gedeg bichigleltei adilhan.
-  //   const { payload } = action
-  //   const knowledges = state.knowledges.map(v =>
-  //     v.id === payload.id ? payload : v
-  //   )
-  //   return {
-  //     ...state,
-  //     knowledges,
-  //   }
   // }
-  else if (action.type === 'UPDATEID') {
+  else if (action.type === 'UPDATE') {
+    // payload-ruu action-iin payload-iig zadlaj hiine
+    // doorh bichiglel ni const payload = action.payload gedeg bichigleltei adilhan.
+    const { payload } = action
+    const list = state.list.map(v => (v.id === payload.id ? payload : v))
+    return {
+      ...state,
+      list,
+    }
+  } else if (action.type === 'UPDATEID') {
     // payload-ruu action-iin payload-iig zadlaj hiine
     // doorh bichiglel ni const payload = action.payload gedeg bichigleltei adilhan.
     const { payload } = action

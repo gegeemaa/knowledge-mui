@@ -21,13 +21,13 @@ export const enterMultiple = state => {
 //     id: id,
 //   }
 // }
-// export const updateRow = state => {
-//   // console.log('UPdatestate', state)
-//   return {
-//     type: 'UPDATE',
-//     payload: state,
-//   }
-// }
+export const updateRow = state => {
+  console.log('UPdatestate', state)
+  return {
+    type: 'UPDATE',
+    payload: state,
+  }
+}
 export const updateID = state => {
   // console.log('UPdatestate', state)
   return {

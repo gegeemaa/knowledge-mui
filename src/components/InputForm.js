@@ -16,11 +16,19 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers'
 
-const InputForm = ({ submit, buttonText }) => {
-  const [date, setDate] = useState(new Date())
-  const [title, setTitle] = useState('')
-  const [body, setBody] = useState('')
-  const [topic, setTopic] = useState('')
+const InputForm = ({ submit, buttonText, value }) => {
+  // if (Object.keys(value).length === 0) {
+  //   const [date, setDate] = useState(new Date())
+  //   const [title, setTitle] = useState('')
+  //   const [body, setBody] = useState('')
+  //   const [topic, setTopic] = useState('')
+  // } else {
+  const id = value.id
+  const [date, setDate] = useState(value.date)
+  const [title, setTitle] = useState(value.title)
+  const [body, setBody] = useState(value.body)
+  const [topic, setTopic] = useState(value.topic)
+  // }
 
   const change = evt => {
     const name = evt.target.name
@@ -103,7 +111,7 @@ const InputForm = ({ submit, buttonText }) => {
       <Button
         variant="contained"
         color="primary"
-        onClick={() => onFinish({ date, title, body, topic })}>
+        onClick={() => onFinish({ id, date, title, body, topic })}>
         {buttonText}
       </Button>
     </form>

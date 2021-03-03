@@ -1,25 +1,41 @@
 import { React, useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import axios from '../axios-knowledges'
+import { makeStyles } from '@material-ui/core/styles'
 import {
   Radio,
   RadioGroup,
   FormControlLabel,
   FormControl,
   FormLabel,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
 } from '@material-ui/core'
-import { DataGrid } from '@material-ui/data-grid'
 import {
   enterMultiple,
   deleteRow,
   updateRow,
 } from '../redux/actions/knowledgeActions'
 import EditIcon from '@material-ui/icons/Edit'
+import AddIcon from '@material-ui/icons/Add'
+import Modal from './Modal'
+
 // import InputForm from '../../components/form'
+
+const useStyles = makeStyles({
+  table: {
+    minWidth: 650,
+  },
+})
 
 const List = () => {
   const dispatch = useDispatch()
-
+  const classes = useStyles()
   const knowledges = useSelector(state => state.list)
   const [items, setItems] = useState(knowledges)
   const [filter, setFilter] = useState('All')
@@ -80,13 +96,14 @@ const List = () => {
     // console.log("diffDays" + diffDays);
     return diffDays === period
   }
-  const rows = items.filter(FILTER_MAP[filter]).map((knowledge, i) => ({
-    id: knowledge.id,
-    date: knowledge.date,
-    title: knowledge.title,
-    topic: knowledge.topic,
-    // action: <EditIcon />,
-  }))
+  const createData = (id, date, title, topic) => {
+    return { id, date, title, topic }
+  }
+  const rows = items
+    .filter(FILTER_MAP[filter])
+    .map((knowledge, i) =>
+      createData(knowledge.id, knowledge.date, knowledge.title, knowledge.topic)
+    )
 
   const handleChange = evt => {
     var filter = evt.target.value
@@ -102,56 +119,54 @@ const List = () => {
   //     //Redux-aas ustgah
   //     dispatch(deleteRow(id))
   //   }
-  //   const [isModalVisible, setIsModalVisible] = useState(false)
-  //   const [value, setValue] = useState(null)
 
-  //   const showModal = id => {
-  //     setIsModalVisible(true)
-  //     const found = items.find(item => item.id === id)
-  //     const val = {
-  //       id,
-  //       date: moment(new Date(found.date), 'YYYY-MM-DD'),
-  //       title: found.title,
-  //       body: found.body,
-  //       topic: found.topic,
-  //     }
-  //     setValue(val)
-  //   }
+  const [open, setOpen] = useState(false)
+  const [value, setValue] = useState(null)
 
-  //   const handleCancel = () => {
-  //     setIsModalVisible(false)
-  //   }
+  const showModal = id => {
+    setOpen(true)
+    const found = items.find(item => item.id === id)
+    const val = {
+      id,
+      date: found.date,
+      title: found.title,
+      body: found.body,
+      topic: found.topic,
+    }
+    setValue(val)
+  }
 
-  //   const onUpdate = newValue => {
-  //     console.log('Updated:', newValue)
-  //     if (newValue.date !== '' && newValue.title !== '') {
-  //       const knowledge = {
-  //         id: newValue.id,
-  //         date: newValue.date.format('YYYY-MM-DD'),
-  //         title: newValue.title,
-  //         body: newValue.body,
-  //         topic: newValue.topic,
-  //       }
-  //       dispatch(updateRow(knowledge))
-  //       // // send data to Firebase database
-  //       axios
-  //         .put('/knowledges/' + newValue.id + '.json', knowledge)
-  //         .then(response => {
-  //           // redux-ruu yavuulj bn
-  //           console.log(response)
-  //         })
-  //     }
-  //     setIsModalVisible(false)
-  //   }
-  const columns = [
-    { field: 'date', headerName: 'Date', width: 130 },
-    { field: 'title', headerName: 'Title', width: 130 },
-    { field: 'topic', headerName: 'Topic', width: 130 },
-    { field: 'action', headerName: 'Action', width: 90 },
-  ]
+  const handleCancel = () => {
+    setOpen(false)
+  }
 
+  const onUpdate = newValue => {
+    // console.log('Updated:', newValue)
+    if (newValue.date !== '' && newValue.title !== '') {
+      const knowledge = {
+        id: newValue.id,
+        date: newValue.date.toISOString().slice(0, 10),
+        title: newValue.title,
+        body: newValue.body,
+        topic: newValue.topic,
+      }
+      dispatch(updateRow(knowledge))
+      // // send data to Firebase database
+      axios
+        .put('/knowledges/' + newValue.id + '.json', knowledge)
+        .then(response => {
+          // redux-ruu yavuulj bn
+          // console.log(response)
+        })
+    }
+    setOpen(false)
+  }
   return (
     <div>
+      <a onClick={() => showModal('-1')}>
+        {' '}
+        <AddIcon />{' '}
+      </a>
       <FormControl component="fieldset">
         <RadioGroup
           aria-label="All"
@@ -167,42 +182,43 @@ const List = () => {
         </RadioGroup>
       </FormControl>
 
-      {/* <Table dataSource={rows}>
-        <Column title="Date" dataIndex="date" key="date" />
-        <Column title="Title" dataIndex="title" key="title" />
-        <Column title="Topic" dataIndex="topic" key="topic" />
-        <Column
-          title="Action"
-          key="action"
-          render={(text, record) => (
-            <Space size="middle">
-              <a onClick={() => showModal(text.key)}>
-                <EditOutlined />
-              </a>
-              <a onClick={() => deleteItem(text.key)}>
-                <DeleteOutlined />
-              </a>
-            </Space>
-          )}
-        />
-      </Table> */}
-      <div style={{ height: 400, width: '100%' }}>
-        <DataGrid rows={rows} columns={columns} pageSize={5} />
-      </div>
+      <TableContainer component={Paper}>
+        <Table className={classes.table} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Date</TableCell>
+              <TableCell>Title</TableCell>
+              <TableCell>Topic</TableCell>
+              <TableCell align="right">Action</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map(row => (
+              <TableRow key={row.id}>
+                <TableCell component="th" scope="row">
+                  {row.date}
+                </TableCell>
+                <TableCell>{row.title}</TableCell>
+                <TableCell>{row.topic}</TableCell>
+                <TableCell align="right">
+                  <a onClick={() => showModal(row.id)}>
+                    <EditIcon />
+                  </a>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
 
-      {/* <Modal
-        title="Basic Modal"
-        visible={isModalVisible}
-        onCancel={handleCancel}
-        footer={[
-          <Button key="back" onClick={handleCancel}>
-            Cancel
-          </Button>,
-        ]}>
-        <InputForm value={value} onUpdate={onUpdate} buttonText={buttonText} />
-      </Modal> */}
+      <Modal
+        open={open}
+        handleCancel={handleCancel}
+        value={value}
+        onUpdate={onUpdate}
+        buttonText={buttonText}
+      />
     </div>
   )
 }
-
 export default List

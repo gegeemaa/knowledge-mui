@@ -7,6 +7,12 @@ import InputForm from './InputForm'
 const AddKnowledge = () => {
   const dispatch = useDispatch()
   const buttonText = 'Add'
+  const value = {
+    date: new Date(),
+    title: '',
+    body: '',
+    topic: '',
+  }
   const add = values => {
     console.log(values)
     if (values.date !== '' && values.title !== '') {
@@ -28,7 +34,7 @@ const AddKnowledge = () => {
   return (
     <div>
       {/* <InputForm onUpdate={addItem} value={value} buttonText={buttonText} /> */}
-      <InputForm submit={add} buttonText={buttonText} />
+      <InputForm value={value} submit={add} buttonText={buttonText} />
     </div>
   )
 }
