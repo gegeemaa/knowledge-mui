@@ -8,7 +8,7 @@ import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import InputForm from './InputForm'
 
-const Modal = ({ open, handleCancel, value, onUpdate, buttonText }) => {
+const Modal = ({ open, handleCancel, value, buttonText }) => {
   return (
     <Dialog
       open={open}
@@ -16,7 +16,11 @@ const Modal = ({ open, handleCancel, value, onUpdate, buttonText }) => {
       aria-labelledby="form-dialog-title">
       <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
       <DialogContent>
-        <InputForm value={value} submit={onUpdate} buttonText={buttonText} />
+        <InputForm
+          value={value}
+          buttonText={buttonText}
+          handleCancel={handleCancel}
+        />
       </DialogContent>
       {/* <DialogActions>
         <Button onClick={handleCancel} color="primary">

@@ -19,9 +19,10 @@ import {
 import {
   enterMultiple,
   deleteRow,
-  updateRow,
+  // updateRow,
 } from '../redux/actions/knowledgeActions'
 import EditIcon from '@material-ui/icons/Edit'
+import DeleteIcon from '@material-ui/icons/Delete'
 import AddIcon from '@material-ui/icons/Add'
 import Modal from './Modal'
 
@@ -109,66 +110,37 @@ const List = () => {
     var filter = evt.target.value
     setFilter(filter)
   }
-  //   const deleteItem = id => {
-  //     //Delete from DB
-  //     console.log('DeleteItem' + id)
-  //     axios.delete('/knowledges/' + id + '.json').then(response => {
-  //       console.log('Ustgalaa')
-  //     })
-  //     setItems(items.filter(item => item.id !== id))
-  //     //Redux-aas ustgah
-  //     dispatch(deleteRow(id))
-  //   }
+  const deleteItem = id => {
+    //Delete from DB
+    console.log('DeleteItem' + id)
+    axios.delete('/knowledges/' + id + '.json').then(response => {
+      console.log('Ustgalaa')
+    })
+    setItems(items.filter(item => item.id !== id))
+    //Redux-aas ustgah
+    dispatch(deleteRow(id))
+  }
 
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState(null)
 
-  const showModal = id => {
+  const openItem = knowledge => {
     setOpen(true)
-    const found = items.find(item => item.id === id)
-    const val = {
-      id,
-      date: found.date,
-      title: found.title,
-      body: found.body,
-      topic: found.topic,
-    }
-    setValue(val)
+    setValue(knowledge)
   }
 
   const handleCancel = () => {
     setOpen(false)
   }
 
-  const onUpdate = newValue => {
-    // console.log('Updated:', newValue)
-    if (newValue.date !== '' && newValue.title !== '') {
-      const knowledge = {
-        id: newValue.id,
-        date: newValue.date.toISOString().slice(0, 10),
-        title: newValue.title,
-        body: newValue.body,
-        topic: newValue.topic,
-      }
-      dispatch(updateRow(knowledge))
-      // // send data to Firebase database
-      axios
-        .put('/knowledges/' + newValue.id + '.json', knowledge)
-        .then(response => {
-          // redux-ruu yavuulj bn
-          // console.log(response)
-        })
-    }
-    setOpen(false)
-  }
   return (
     <div>
-      <a onClick={() => showModal('-1')}>
-        {' '}
-        <AddIcon />{' '}
+      <a onClick={() => openItem(null)}>
+        <AddIcon />
       </a>
       <FormControl component="fieldset">
         <RadioGroup
+          row
           aria-label="All"
           name="gender1"
           value={filter}
@@ -193,16 +165,19 @@ const List = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map(row => (
-              <TableRow key={row.id}>
+            {rows.map(knowledge => (
+              <TableRow key={knowledge.id}>
                 <TableCell component="th" scope="row">
-                  {row.date}
+                  {knowledge.date}
                 </TableCell>
-                <TableCell>{row.title}</TableCell>
-                <TableCell>{row.topic}</TableCell>
+                <TableCell>{knowledge.title}</TableCell>
+                <TableCell>{knowledge.topic}</TableCell>
                 <TableCell align="right">
-                  <a onClick={() => showModal(row.id)}>
+                  <a onClick={() => openItem(knowledge)}>
                     <EditIcon />
+                  </a>
+                  <a onClick={() => deleteItem(knowledge.id)}>
+                    <DeleteIcon />
                   </a>
                 </TableCell>
               </TableRow>
@@ -215,7 +190,6 @@ const List = () => {
         open={open}
         handleCancel={handleCancel}
         value={value}
-        onUpdate={onUpdate}
         buttonText={buttonText}
       />
     </div>

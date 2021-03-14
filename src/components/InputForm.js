@@ -1,4 +1,6 @@
 import React, { useRef, useState } from 'react'
+import { useDispatch } from 'react-redux'
+
 import {
   TextField,
   Menu,
@@ -15,19 +17,26 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers'
+import { updateFunction } from './updateFunction'
+import { addFunction } from './addFunction'
 
-const InputForm = ({ submit, buttonText, value }) => {
+const InputForm = ({ buttonText, value, handleCancel }) => {
   // if (Object.keys(value).length === 0) {
   //   const [date, setDate] = useState(new Date())
   //   const [title, setTitle] = useState('')
   //   const [body, setBody] = useState('')
   //   const [topic, setTopic] = useState('')
   // } else {
-  const id = value.id
-  const [date, setDate] = useState(value.date)
-  const [title, setTitle] = useState(value.title)
-  const [body, setBody] = useState(value.body)
-  const [topic, setTopic] = useState(value.topic)
+  console.log('value' + value)
+  const id = value !== null ? value.id : null
+  const today = new Date()
+  const todayString = today.toISOString().slice(0, 10)
+  const [date, setDate] = useState(value !== null ? value.date : todayString)
+  const [title, setTitle] = useState(value !== null ? value.title : '')
+  const [body, setBody] = useState(value !== null ? value.body : '')
+  const [topic, setTopic] = useState(value !== null ? value.topic : '')
+  const dispatch = useDispatch()
+
   // }
 
   const change = evt => {
@@ -42,11 +51,17 @@ const InputForm = ({ submit, buttonText, value }) => {
     }
   }
   const changeDate = date => {
-    setDate(date)
+    setDate(date !== null ? date.toISOString().slice(0, 10) : null)
   }
-  const onFinish = values => {
-    // onUpdate function-iin parameter-eer form-iin valuenuudaas gadna id-g nemj yavuulj bna.
-    submit(values)
+  const onFinish = () => {
+    // updateFunction function-iin parameter-eer form-iin valuenuudaas gadna id-g nemj yavuulj bna.
+    if (id !== null) {
+      updateFunction(id, date, title, body, topic, dispatch)
+    } else {
+      addFunction(id, date, title, body, topic, dispatch)
+    }
+
+    handleCancel()
   }
 
   return (
@@ -66,6 +81,8 @@ const InputForm = ({ submit, buttonText, value }) => {
             KeyboardButtonProps={{
               'aria-label': 'change date',
             }}
+            autoOk
+            emptyLabel="Not accept empty date!"
           />
         </MuiPickersUtilsProvider>
       </FormControl>
@@ -108,10 +125,7 @@ const InputForm = ({ submit, buttonText, value }) => {
         </Select>
       </FormControl>
 
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => onFinish({ id, date, title, body, topic })}>
+      <Button variant="contained" color="primary" onClick={onFinish}>
         {buttonText}
       </Button>
     </form>

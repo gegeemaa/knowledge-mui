@@ -20,7 +20,6 @@ import AddIcon from '@material-ui/icons/Add'
 import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered'
 import { Route, MemoryRouter, Switch } from 'react-router'
 import { Link as RouterLink } from 'react-router-dom'
-import Add from './Add'
 import ListKnowledges from './List'
 
 const drawerWidth = 240
@@ -163,7 +162,6 @@ export default function App() {
           </div>
           <Divider />
           <List>
-            <ListItemLink to="/add" primary="Add" icon={<AddIcon />} />
             <ListItemLink
               to="/list"
               primary="List"
@@ -177,10 +175,6 @@ export default function App() {
           })}>
           <div className={classes.drawerHeader} />
           <Switch>
-            <Route path="/add" exact>
-              <Add />
-              {/* Add */}
-            </Route>
             <Route path="/list" exact>
               <ListKnowledges />
             </Route>

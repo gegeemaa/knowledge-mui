@@ -11,16 +11,15 @@ export const enter = state => {
 export const enterMultiple = state => {
   return {
     type: 'FETCH',
-    // id: ++nextTodoId,
     payload: state,
   }
 }
-// export const deleteRow = id => {
-//   return {
-//     type: 'DELETE',
-//     id: id,
-//   }
-// }
+export const deleteRow = id => {
+  return {
+    type: 'DELETE',
+    id: id,
+  }
+}
 export const updateRow = state => {
   console.log('UPdatestate', state)
   return {

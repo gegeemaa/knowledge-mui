@@ -27,15 +27,13 @@ const knowledgeReducer = (state = initialState, action) => {
       ...state,
       list: action.payload,
     }
-  }
-  //else if (action.type === 'DELETE') {
-  //   // Firebase-ees olnoor ni nemj baina.
-  //   return {
-  //     ...state,
-  //     knowledges: state.knowledges.filter(item => item.id !== action.id),
-  //   }
-  // }
-  else if (action.type === 'UPDATE') {
+  } else if (action.type === 'DELETE') {
+    // Firebase-ees olnoor ni nemj baina.
+    return {
+      ...state,
+      list: state.list.filter(item => item.id !== action.id),
+    }
+  } else if (action.type === 'UPDATE') {
     // payload-ruu action-iin payload-iig zadlaj hiine
     // doorh bichiglel ni const payload = action.payload gedeg bichigleltei adilhan.
     const { payload } = action
