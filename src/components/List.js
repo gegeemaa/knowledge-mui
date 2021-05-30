@@ -40,6 +40,9 @@ const useStyles = makeStyles({
     overflow: 'auto',
     flexDirection: 'column',
   },
+  AddIcon: {
+    color: '#3f51b5',
+  },
 })
 
 const List = () => {
@@ -158,8 +161,9 @@ const List = () => {
   return (
     <div>
       <a onClick={() => openItem(null)}>
-        <AddIcon />
+        <AddIcon className={classes.AddIcon} fontSize="large" />
       </a>
+      &nbsp; &nbsp;
       <FormControl component="fieldset">
         <RadioGroup
           row
@@ -175,7 +179,6 @@ const List = () => {
           <FormControlLabel value="30" control={<Radio />} label="30 days" />
         </RadioGroup>
       </FormControl>
-
       <Grid container spacing={3}>
         <Grid item xs={6}>
           <TableContainer component={Paper}>
@@ -227,7 +230,6 @@ const List = () => {
           </Paper>
         </Grid>
       </Grid>
-
       <Modal
         open={open}
         handleCancel={handleCancel}
