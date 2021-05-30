@@ -175,13 +175,16 @@ export default function App() {
           })}>
           <div className={classes.drawerHeader} />
           <Switch>
-            <Route path="/list" exact>
-              <ListKnowledges />
-            </Route>
-            <Route path="*">
+            <Route exact path="*">
               <ListKnowledges />
               {/* not found */}
             </Route>
+            <Route path="/list">
+              <ListKnowledges />
+            </Route>
+            {/* <Route path="/studyNow">
+              <StudyNow />
+            </Route> */}
           </Switch>
         </main>
       </div>

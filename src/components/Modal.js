@@ -14,7 +14,7 @@ const Modal = ({ open, handleCancel, value, buttonText }) => {
       open={open}
       onClose={handleCancel}
       aria-labelledby="form-dialog-title">
-      <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+      <DialogTitle id="form-dialog-title">Add knowledge</DialogTitle>
       <DialogContent>
         <InputForm
           value={value}
@@ -22,14 +22,6 @@ const Modal = ({ open, handleCancel, value, buttonText }) => {
           handleCancel={handleCancel}
         />
       </DialogContent>
-      {/* <DialogActions>
-        <Button onClick={handleCancel} color="primary">
-          Cancel
-        </Button>
-        <Button onClick={handleCancel} color="primary">
-          Subscribe
-        </Button>
-      </DialogActions> */}
     </Dialog>
   )
 }

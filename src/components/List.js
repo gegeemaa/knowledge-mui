@@ -24,13 +24,21 @@ import {
 import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
 import AddIcon from '@material-ui/icons/Add'
+import VisibilityIcon from '@material-ui/icons/Visibility'
 import Modal from './Modal'
+import Grid from '@material-ui/core/Grid'
 
 // import InputForm from '../../components/form'
 
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
+  },
+  paper: {
+    padding: '15px',
+    display: 'flex',
+    overflow: 'auto',
+    flexDirection: 'column',
   },
 })
 
@@ -40,8 +48,9 @@ const List = () => {
   const knowledges = useSelector(state => state.list)
   const [items, setItems] = useState(knowledges)
   const [filter, setFilter] = useState('All')
+  const [buttonText, setButtonText] = useState('')
+
   // const [buttonText, setButtonText] = useState('Update')
-  const buttonText = 'Update'
   let data = []
   var period = 1
   const FILTER_MAP = {
@@ -62,6 +71,7 @@ const List = () => {
         //Object-iig array-ruu horvuuleh
         const arr = Object.entries(response.data)
         // console.log(arr)
+        // map() ni array-aas shine array uusgeh function yum.
         data = arr.map(el => ({
           id: el[0],
           date: el[1].date,
@@ -97,14 +107,16 @@ const List = () => {
     // console.log("diffDays" + diffDays);
     return diffDays === period
   }
-  const createData = (id, date, title, topic) => {
-    return { id, date, title, topic }
+  const createData = (id, date, title, body, topic) => {
+    return { id, date, title, body, topic }
   }
-  const rows = items
-    .filter(FILTER_MAP[filter])
-    .map((knowledge, i) =>
-      createData(knowledge.id, knowledge.date, knowledge.title, knowledge.topic)
-    )
+
+  console.log('Items:')
+  console.log(items)
+  const rows = items.filter(FILTER_MAP[filter])
+
+  console.log('ROW')
+  console.log(rows)
 
   const handleChange = evt => {
     var filter = evt.target.value
@@ -112,9 +124,9 @@ const List = () => {
   }
   const deleteItem = id => {
     //Delete from DB
-    console.log('DeleteItem' + id)
+    // console.log('DeleteSItem' + id)
     axios.delete('/knowledges/' + id + '.json').then(response => {
-      console.log('Ustgalaa')
+      // console.log('Ustgalaa')
     })
     setItems(items.filter(item => item.id !== id))
     //Redux-aas ustgah
@@ -125,7 +137,17 @@ const List = () => {
   const [value, setValue] = useState(null)
 
   const openItem = knowledge => {
+    if (knowledge !== null) {
+      setButtonText('Update')
+    } else {
+      setButtonText('Add')
+    }
+    console.log('Button:' + buttonText)
+
     setOpen(true)
+    setValue(knowledge)
+  }
+  const seeItem = knowledge => {
     setValue(knowledge)
   }
 
@@ -154,37 +176,57 @@ const List = () => {
         </RadioGroup>
       </FormControl>
 
-      <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Date</TableCell>
-              <TableCell>Title</TableCell>
-              <TableCell>Topic</TableCell>
-              <TableCell align="right">Action</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map(knowledge => (
-              <TableRow key={knowledge.id}>
-                <TableCell component="th" scope="row">
-                  {knowledge.date}
-                </TableCell>
-                <TableCell>{knowledge.title}</TableCell>
-                <TableCell>{knowledge.topic}</TableCell>
-                <TableCell align="right">
-                  <a onClick={() => openItem(knowledge)}>
-                    <EditIcon />
-                  </a>
-                  <a onClick={() => deleteItem(knowledge.id)}>
-                    <DeleteIcon />
-                  </a>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <Grid container spacing={3}>
+        <Grid item xs={6}>
+          <TableContainer component={Paper}>
+            <Table className={classes.table} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Date</TableCell>
+                  <TableCell>Title</TableCell>
+                  <TableCell>Topic</TableCell>
+                  <TableCell align="right">Action</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {rows.map(knowledge => (
+                  <TableRow key={knowledge.id}>
+                    <TableCell component="th" scope="row">
+                      {knowledge.date}
+                    </TableCell>
+                    <TableCell>{knowledge.title}</TableCell>
+                    <TableCell>{knowledge.topic}</TableCell>
+                    <TableCell align="right">
+                      <a onClick={() => seeItem(knowledge)}>
+                        <VisibilityIcon />
+                      </a>
+                      <a onClick={() => openItem(knowledge)}>
+                        <EditIcon />
+                      </a>
+                      <a onClick={() => deleteItem(knowledge.id)}>
+                        <DeleteIcon />
+                      </a>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Grid>
+        <Grid item xs={6}>
+          <Paper className={classes.paper}>
+            {value !== null ? (
+              <div>
+                <h3>{value.date}</h3>
+                <h3>{value.title}</h3>
+                <p>{value.body}</p>
+              </div>
+            ) : (
+              ''
+            )}
+          </Paper>
+        </Grid>
+      </Grid>
 
       <Modal
         open={open}
