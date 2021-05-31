@@ -13,17 +13,7 @@ const useStyles = makeStyles({
 })
 
 export default function StudyNow() {
-  return (
-    <Paper className={classes.paper}>
-      {value !== null ? (
-        <div>
-          <h3>{value.date}</h3>
-          <h3>{value.title}</h3>
-          <p>{value.body}</p>
-        </div>
-      ) : (
-        ''
-      )}
-    </Paper>
-  )
+  const classes = useStyles()
+
+  return <Paper className={classes.paper}>Hello</Paper>
 }

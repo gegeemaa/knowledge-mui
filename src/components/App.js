@@ -21,6 +21,8 @@ import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered'
 import { Route, MemoryRouter, Switch } from 'react-router'
 import { Link as RouterLink } from 'react-router-dom'
 import ListKnowledges from './List'
+import StudyNow from './StudyNow'
+import WbIncandescentIcon from '@material-ui/icons/WbIncandescent'
 
 const drawerWidth = 240
 
@@ -168,6 +170,13 @@ export default function App() {
               icon={<FormatListNumberedIcon />}
             />
           </List>
+          <List>
+            <ListItemLink
+              to="/studyNow"
+              primary="Play card"
+              icon={<WbIncandescentIcon />}
+            />
+          </List>
         </Drawer>
         <main
           className={clsx(classes.content, {
@@ -182,9 +191,9 @@ export default function App() {
             <Route path="/list">
               <ListKnowledges />
             </Route>
-            {/* <Route path="/studyNow">
+            <Route path="/studyNow">
               <StudyNow />
-            </Route> */}
+            </Route>
           </Switch>
         </main>
       </div>
