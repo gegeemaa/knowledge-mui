@@ -19,11 +19,11 @@ import ListItemText from '@material-ui/core/ListItemText'
 import AddIcon from '@material-ui/icons/Add'
 import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered'
 import { Route, MemoryRouter, Switch } from 'react-router'
-import { Link as RouterLink } from 'react-router-dom'
+import { Link, BrowserRouter as Router } from 'react-router-dom'
 import ListKnowledges from './List'
 import StudyNow from './StudyNow'
+import Home from './Home'
 import WbIncandescentIcon from '@material-ui/icons/WbIncandescent'
-import HomeIcon from '@material-ui/icons/Home'
 
 const drawerWidth = 240
 
@@ -84,32 +84,31 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-function ListItemLink(props) {
-  const { icon, primary, to } = props
+// function ListItemLink(props) {
+//   const { icon, primary, to } = props
 
-  const renderLink = React.useMemo(
-    () =>
-      React.forwardRef((itemProps, ref) => (
-        <RouterLink to={to} ref={ref} {...itemProps} />
-      )),
-    [to]
-  )
-  return (
-    // ListItem deer darah ued renderLink variable-ruu usrene
-    <li>
-      <ListItem button component={renderLink}>
-        {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
-        <ListItemText primary={primary} />
-      </ListItem>
-    </li>
-  )
-}
+//   const renderLink = React.useMemo(
+//     () =>
+//       React.forwardRef((itemProps, ref) => (
+//         <RouterLink to={to} ref={ref} {...itemProps} />
+//       )),
+//     [to]
+//   )
+//   return (
+//     <li>
+//       <ListItem button component={renderLink}>
+//         {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
+//         <ListItemText primary={primary} />
+//       </ListItem>
+//     </li>
+//   )
+// }
 
-ListItemLink.propTypes = {
-  icon: PropTypes.element,
-  primary: PropTypes.string.isRequired,
-  to: PropTypes.string.isRequired,
-}
+// ListItemLink.propTypes = {
+//   icon: PropTypes.element,
+//   primary: PropTypes.string.isRequired,
+//   to: PropTypes.string.isRequired,
+// }
 
 export default function App() {
   const classes = useStyles()
@@ -125,7 +124,7 @@ export default function App() {
   }
 
   return (
-    <MemoryRouter initialEntries={['/drafts']} initialIndex={0}>
+    <Router initialEntries={['/drafts']} initialIndex={0}>
       <div className={classes.root}>
         <CssBaseline />
         <AppBar
@@ -165,20 +164,18 @@ export default function App() {
             </IconButton>
           </div>
           <Divider />
-          <List>
-            <ListItemLink
-              to="/list"
-              primary="List"
-              icon={<FormatListNumberedIcon />}
-            />
-          </List>
-          <List>
-            <ListItemLink
-              to="/studyNow"
-              primary="Play card"
-              icon={<WbIncandescentIcon />}
-            />
-          </List>
+          <Link to="/" primary="List" icon={<FormatListNumberedIcon />}>
+            Home
+          </Link>
+          <Link to="/list" primary="List" icon={<FormatListNumberedIcon />}>
+            List
+          </Link>
+          <Link
+            to="/studyNow"
+            primary="Play card"
+            icon={<WbIncandescentIcon />}>
+            Play card
+          </Link>
         </Drawer>
         <main
           className={clsx(classes.content, {
@@ -186,12 +183,20 @@ export default function App() {
           })}>
           <div className={classes.drawerHeader} />
           <Switch>
-            <Route exact path="/" component={ListKnowledges} />
+            {/* <Route>
+              {({ location }) => (
+                <Typography gutterBottom>
+                  Current route: {location.pathname}
+                </Typography>
+              )}
+            </Route> */}
+
             <Route path="/list" component={ListKnowledges} />
-            <Route path="/studyNow" component={StudyNow} />
+            <Route path="/listNow" component={StudyNow} />
+            <Route path="/" component={Home} />
           </Switch>
         </main>
       </div>
-    </MemoryRouter>
+    </Router>
   )
 }
