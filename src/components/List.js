@@ -81,6 +81,7 @@ const List = () => {
           title: el[1].title,
           body: el[1].body,
           topic: el[1].topic,
+          rate: el[1].rate,
         }))
         //Redux-ruu firebase DB-ees avsan ogogdloo nemj bna.
         dispatch(enterMultiple(data))
@@ -223,6 +224,7 @@ const List = () => {
                 <h3>{value.date}</h3>
                 <h3>{value.title}</h3>
                 <p>{value.body}</p>
+                <p>{value.rate}</p>
               </div>
             ) : (
               ''

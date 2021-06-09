@@ -61,15 +61,10 @@ export default function StudyNow() {
       .catch(error => {
         console.log(error)
       })
-    // setItems('knowledges')
-    // console.log('Knowledges')
-    // console.log(knowledges)
   }, [])
 
   useEffect(() => {
     // Should not ever set state during rendering, so do this in useEffect instead.
-    // console.log('KnowledgesUpdate')
-    // console.log(knowledges)
     setItems(knowledges)
   }, [knowledges])
 
@@ -82,9 +77,15 @@ export default function StudyNow() {
     // console.log('Hello' + currentIndex)
     setIndex(currentIndex + 1)
     setAnswerDisplay(false)
+    if (arg == 'good') {
+      // axios.post('/knowledges.json', knowledge).then(response => {
+      //   dispatch(updateID({ ...knowledge, id: response.data.name }))
+      // })
+    } else if (arg == 'bad') {
+    }
   }
 
-  if (items.length == 0) {
+  if (items.length === 0) {
     return (
       <Paper className={classes.paper}>
         <p>There is not value.</p>

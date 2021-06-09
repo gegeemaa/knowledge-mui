@@ -18,6 +18,7 @@ const knowledgeReducer = (state = initialState, action) => {
           title: action.title,
           body: action.body,
           topic: action.topic,
+          rate: 0,
         },
       ],
     }

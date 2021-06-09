@@ -1,7 +1,15 @@
 import { updateRow } from '../redux/actions/knowledgeActions'
 import axios from '../axios-knowledges'
 
-export const updateFunction = (id, date, title, body, topic, dispatch) => {
+export const updateFunction = (
+  id,
+  date,
+  title,
+  body,
+  topic,
+  rate,
+  dispatch
+) => {
   if (date !== '' && title !== '') {
     const knowledge = {
       id,
@@ -9,6 +17,7 @@ export const updateFunction = (id, date, title, body, topic, dispatch) => {
       title,
       body,
       topic,
+      rate,
     }
     dispatch(updateRow(knowledge))
     // // send data to Firebase database

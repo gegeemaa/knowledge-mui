@@ -6,6 +6,7 @@ export const enter = state => {
     title: state.title,
     body: state.body,
     topic: state.topic,
+    // rate: rate.state,
   }
 }
 export const enterMultiple = state => {

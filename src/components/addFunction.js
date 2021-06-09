@@ -1,7 +1,7 @@
 import axios from '../axios-knowledges'
 import { enter, updateID } from '../redux/actions/knowledgeActions'
 
-export const addFunction = (id, date, title, body, topic, dispatch) => {
+export const addFunction = (id, date, title, body, topic, rate, dispatch) => {
   if (date !== '' && title !== '') {
     const knowledge = {
       id,
@@ -9,6 +9,8 @@ export const addFunction = (id, date, title, body, topic, dispatch) => {
       title,
       body,
       topic,
+      rate,
+      user_id: 'GEREL_85',
     }
     // redux-ruu yavuulj bna
     dispatch(enter(knowledge))

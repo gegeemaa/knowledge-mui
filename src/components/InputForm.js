@@ -55,6 +55,8 @@ const InputForm = ({ buttonText, value, handleCancel }) => {
   const [title, setTitle] = useState(value !== null ? value.title : '')
   const [body, setBody] = useState(value !== null ? value.body : '')
   const [topic, setTopic] = useState(value !== null ? value.topic : '')
+  const [rate, setRate] = useState(value !== null ? value.rate : 0)
+
   const dispatch = useDispatch()
 
   const classes = useStyles()
@@ -68,8 +70,10 @@ const InputForm = ({ buttonText, value, handleCancel }) => {
       setTitle(newValue)
     } else if (name === 'Body') {
       setBody(newValue)
-    } else {
+    } else if (name == 'Topic') {
       setTopic(newValue)
+    } else {
+      setRate(newValue)
     }
   }
   const changeDate = date => {
@@ -78,12 +82,35 @@ const InputForm = ({ buttonText, value, handleCancel }) => {
   const onFinish = () => {
     // updateFunction function-iin parameter-eer form-iin valuenuudaas gadna id-g nemj yavuulj bna.
     if (id !== null) {
-      updateFunction(id, date, title, body, topic, dispatch)
+      updateFunction(id, date, title, body, topic, rate, dispatch)
     } else {
-      addFunction(id, date, title, body, topic, dispatch)
+      addFunction(id, date, title, body, topic, rate, dispatch)
     }
     handleCancel()
   }
+  // const MenuItemEgen = () => {
+  //   if (value == null) {
+  //     return (
+  //       <div>
+  //         <MenuItem value="0">New</MenuItem>
+  //         <MenuItem value="1" disabled>
+  //           Good
+  //         </MenuItem>
+  //         <MenuItem value="2" disabled>
+  //           Bad
+  //         </MenuItem>
+  //       </div>
+  //     )
+  //   } else {
+  //     return (
+  //       <div>
+  //         <MenuItem value="0">New</MenuItem>
+  //         <MenuItem value="1">Good</MenuItem>
+  //         <MenuItem value="2">Bad</MenuItem>
+  //       </div>
+  //     )
+  //   }
+  // }
 
   return (
     <form noValidate autoComplete="off">
@@ -146,6 +173,25 @@ const InputForm = ({ buttonText, value, handleCancel }) => {
           <MenuItem value="React">React</MenuItem>
           <MenuItem value="Exercise">Exercise</MenuItem>
           <MenuItem value="Meditation">Meditation</MenuItem>
+        </Select>
+      </FormControl>
+      <FormControl>
+        <Select
+          name="Rate"
+          value={rate}
+          onChange={change}
+          // displayEmpty
+          margin="dense"
+          // className={classes.selectEmpty}
+          inputProps={{ 'aria-label': 'Without label' }}>
+          <MenuItem value="0">New</MenuItem>
+          <MenuItem value="1" disabled={value == null}>
+            Good
+          </MenuItem>
+          <MenuItem value="2" disabled={value == null}>
+            Bad
+          </MenuItem>
+          {/* {MenuItemEgen} */}
         </Select>
       </FormControl>
 
