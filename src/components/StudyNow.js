@@ -10,6 +10,7 @@ import {
   // updateRow,
 } from '../redux/actions/knowledgeActions'
 import { Block, RowingSharp } from '@material-ui/icons'
+import { GridLeftEmptyCell } from '@material-ui/data-grid'
 
 const useStyles = makeStyles({
   paper: {
@@ -38,7 +39,7 @@ export default function StudyNow() {
 
   // eniig daraa ni tusdaa component bolgoh
   useEffect(() => {
-    console.log('HellouseEffect')
+    // console.log('HellouseEffect')
     // gants udaa, ehnii
     axios
       .get('/knowledges.json')
@@ -58,12 +59,17 @@ export default function StudyNow() {
         dispatch(enterMultiple(data))
       })
       .catch(error => {
-        // console.log(error)
+        console.log(error)
       })
+    // setItems('knowledges')
+    // console.log('Knowledges')
+    // console.log(knowledges)
   }, [])
 
   useEffect(() => {
     // Should not ever set state during rendering, so do this in useEffect instead.
+    // console.log('KnowledgesUpdate')
+    // console.log(knowledges)
     setItems(knowledges)
   }, [knowledges])
 
@@ -73,46 +79,54 @@ export default function StudyNow() {
   }
 
   const next = arg => {
-    console.log('Hello' + currentIndex)
+    // console.log('Hello' + currentIndex)
     setIndex(currentIndex + 1)
     setAnswerDisplay(false)
   }
 
+  if (items.length == 0) {
+    return (
+      <Paper className={classes.paper}>
+        <p>There is not value.</p>
+      </Paper>
+    )
+  } else if (currentIndex >= items.length) {
+    return (
+      <Paper className={classes.paper}>
+        <p>Card-iig ajillaj duuslaa. Bayarlalaa!</p>
+      </Paper>
+    )
+  }
+
   return (
     <Paper className={classes.paper}>
-      {items && currentIndex < items.length ? (
-        <div>
-          <p>{items[currentIndex].title}</p>
+      <div>
+        <p>{items[currentIndex].title}</p>
 
-          <Button
-            variant="outlined"
-            color="primary"
-            onClick={() => showAnswer(currentIndex)}>
-            Show answer
-          </Button>
-          {answerDisplay && (
-            <div>
-              <div id="body">{items[currentIndex].body}</div>
-              <Button
-                variant="outlined"
-                color="primary"
-                onClick={() => next('good')}>
-                Good
-              </Button>
-              <Button
-                variant="outlined"
-                color="secondary"
-                onClick={() => next('bad')}>
-                Bad
-              </Button>
-            </div>
-          )}
-        </div>
-      ) : items ? (
-        <p>Card-iig ajillaj duuslaa. Bayarlalaa!</p>
-      ) : (
-        <p>There is not value.</p>
-      )}
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={() => showAnswer(currentIndex)}>
+          Show answer
+        </Button>
+        {answerDisplay && (
+          <div>
+            <div id="body">{items[currentIndex].body}</div>
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={() => next('good')}>
+              Good
+            </Button>
+            <Button
+              variant="outlined"
+              color="secondary"
+              onClick={() => next('bad')}>
+              Bad
+            </Button>
+          </div>
+        )}
+      </div>
     </Paper>
   )
 }
