@@ -34,7 +34,6 @@ export default function StudyNow() {
   const [answerDisplay, setAnswerDisplay] = useState(false)
   const [currentIndex, setIndex] = useState(0)
   const [answer, setAnswer] = useState('')
-  // console.log(items)
   let data = []
 
   // eniig daraa ni tusdaa component bolgoh
@@ -70,6 +69,7 @@ export default function StudyNow() {
 
   const showAnswer = argument => {
     setAnswerDisplay(true)
+    console.log('Lenth' + items.length)
   }
 
   const next = arg => {
@@ -80,7 +80,7 @@ export default function StudyNow() {
 
   return (
     <Paper className={classes.paper}>
-      {items ? (
+      {items && currentIndex < items.length ? (
         <div>
           <p>{items[currentIndex].title}</p>
 
@@ -108,6 +108,8 @@ export default function StudyNow() {
             </div>
           )}
         </div>
+      ) : items ? (
+        <p>Card-iig ajillaj duuslaa. Bayarlalaa!</p>
       ) : (
         <p>There is not value.</p>
       )}
