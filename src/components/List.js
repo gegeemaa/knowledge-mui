@@ -66,7 +66,7 @@ const List = () => {
   }
 
   useEffect(() => {
-    console.log('Hello')
+    // console.log('Hello')
     // gants udaa, ehnii
     axios
       .get('/knowledges.json')
@@ -114,12 +114,12 @@ const List = () => {
     return { id, date, title, body, topic }
   }
 
-  console.log('Items:')
-  console.log(items)
+  // console.log('Items:')
+  // console.log(items)
   const rows = items.filter(FILTER_MAP[filter])
 
-  console.log('ROW')
-  console.log(rows)
+  // console.log('ROW')
+  // console.log(rows)
 
   const handleChange = evt => {
     var filter = evt.target.value
