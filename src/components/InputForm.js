@@ -19,18 +19,7 @@ import {
 import { updateFunction } from './updateFunction'
 import { addFunction } from './addFunction'
 
-const useStyles = makeStyles({
-  // formInput: {
-  //   width: 1200,
-  // },
-  // formInput: {
-  //   '& > *': {
-  //     margin: 10,
-  //   },
-  // },
-  // formControl: {
-  //   display: 'block',
-  // },
+const useStyles = makeStyles(theme => ({
   submitButton: {
     flex: '0 0 auto',
     display: 'flex',
@@ -38,15 +27,13 @@ const useStyles = makeStyles({
     alignItems: 'center',
     justifyContent: 'flex-end',
   },
-})
+  formControl: {
+    minWidth: 120,
+    margin: theme.spacing(1),
+  },
+}))
 
 const InputForm = ({ buttonText, value, handleCancel }) => {
-  // if (Object.keys(value).length === 0) {
-  //   const [date, setDate] = useState(new Date())
-  //   const [title, setTitle] = useState('')
-  //   const [body, setBody] = useState('')
-  //   const [topic, setTopic] = useState('')
-  // } else {
   console.log('value' + value)
   const id = value !== null ? value.id : null
   const today = new Date()
@@ -114,13 +101,12 @@ const InputForm = ({ buttonText, value, handleCancel }) => {
 
   return (
     <form noValidate autoComplete="off">
-      <FormControl>
+      <FormControl className={classes.formControl}>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <KeyboardDatePicker
             disableToolbar
             variant="inline"
             format="yyyy-MM-dd"
-            margin="dense"
             id="date"
             name="Date"
             label="Date"
@@ -134,7 +120,7 @@ const InputForm = ({ buttonText, value, handleCancel }) => {
           />
         </MuiPickersUtilsProvider>
       </FormControl>
-      <FormControl fullWidth>
+      <FormControl fullWidth className={classes.formControl}>
         <TextField
           label="Title"
           id="title"
@@ -142,10 +128,9 @@ const InputForm = ({ buttonText, value, handleCancel }) => {
           defaultValue={title}
           onChange={change}
           variant="outlined"
-          margin="dense"
         />
       </FormControl>
-      <FormControl fullWidth>
+      <FormControl fullWidth className={classes.formControl}>
         <TextField
           id="body"
           name="Body"
@@ -155,35 +140,19 @@ const InputForm = ({ buttonText, value, handleCancel }) => {
           rows={4}
           defaultValue={body}
           variant="outlined"
-          margin="dense"
         />
       </FormControl>
-      <FormControl>
-        <Select
-          name="Topic"
-          value={topic}
-          onChange={change}
-          displayEmpty
-          margin="dense"
-          // className={classes.selectEmpty}
-          inputProps={{ 'aria-label': 'Without label' }}>
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
+      <FormControl variant="outlined" className={classes.formControl}>
+        <InputLabel id="demo-simple-select-filled-label">Topic</InputLabel>
+        <Select name="Topic" value={topic} onChange={change} label="Topic">
           <MenuItem value="React">React</MenuItem>
           <MenuItem value="Exercise">Exercise</MenuItem>
           <MenuItem value="Meditation">Meditation</MenuItem>
         </Select>
       </FormControl>
-      <FormControl>
-        <Select
-          name="Rate"
-          value={rate}
-          onChange={change}
-          // displayEmpty
-          margin="dense"
-          // className={classes.selectEmpty}
-          inputProps={{ 'aria-label': 'Without label' }}>
+      <FormControl variant="outlined" className={classes.formControl}>
+        <InputLabel id="demo-simple-select-filled-label">Rate</InputLabel>
+        <Select name="Rate" value={rate} onChange={change} label="Rate">
           <MenuItem value="0">New</MenuItem>
           <MenuItem value="1" disabled={value == null}>
             Good
