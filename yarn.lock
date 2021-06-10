@@ -1443,6 +1443,17 @@
   dependencies:
     "@babel/runtime" "^7.4.4"
 
+"@material-ui/lab@^4.0.0-alpha.58":
+  version "4.0.0-alpha.58"
+  resolved "https://registry.yarnpkg.com/@material-ui/lab/-/lab-4.0.0-alpha.58.tgz#c7ebb66f49863c5acbb20817163737caa299fafc"
+  integrity sha512-GKHlJqLxUeHH3L3dGQ48ZavYrqGOTXkFkiEiuYMAnAvXAZP4rhMIqeHOPXSUQan4Bd8QnafDcpovOSLnadDmKw==
+  dependencies:
+    "@babel/runtime" "^7.4.4"
+    "@material-ui/utils" "^4.11.2"
+    clsx "^1.0.4"
+    prop-types "^15.7.2"
+    react-is "^16.8.0 || ^17.0.0"
+
 "@material-ui/pickers@^3.2.10":
   version "3.2.10"
   resolved "https://registry.yarnpkg.com/@material-ui/pickers/-/pickers-3.2.10.tgz#19df024895876eb0ec7cd239bbaea595f703f0ae"
@@ -3418,14 +3429,9 @@ cliui@^6.0.0:
     strip-ansi "^6.0.0"
     wrap-ansi "^6.2.0"
 
-clsx@^1.0.2, clsx@^1.0.4:
+clsx@^1.0.2, clsx@^1.0.4, clsx@^1.1.1:
   version "1.1.1"
   resolved "https://registry.npmjs.org/clsx/-/clsx-1.1.1.tgz"
-  integrity sha512-6/bPho624p3S2pMyvP5kKBPXnI3ufHLObBFCfgx+LkeR5lg2XYy2hqZqUf45ypD8COn2bhgGJSUE+l5dhNBieA==
-
-clsx@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.1.1.tgz#98b3134f9abbdf23b2663491ace13c5c03a73188"
   integrity sha512-6/bPho624p3S2pMyvP5kKBPXnI3ufHLObBFCfgx+LkeR5lg2XYy2hqZqUf45ypD8COn2bhgGJSUE+l5dhNBieA==
 
 co@^4.6.0:

@@ -27,6 +27,7 @@ import AddIcon from '@material-ui/icons/Add'
 import VisibilityIcon from '@material-ui/icons/Visibility'
 import Modal from './Modal'
 import Grid from '@material-ui/core/Grid'
+import Alert from '@material-ui/lab/Alert'
 
 // import InputForm from '../../components/form'
 
@@ -139,6 +140,9 @@ const List = () => {
 
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState(null)
+  const [severity, setSeverity] = useState('')
+  const [severityMessege, setSeverityMessege] = useState('')
+  // let severity = ''
 
   const openItem = knowledge => {
     if (knowledge !== null) {
@@ -153,6 +157,16 @@ const List = () => {
   }
   const seeItem = knowledge => {
     setValue(knowledge)
+    if (knowledge.rate == 0) {
+      setSeverity('info')
+      setSeverityMessege('New')
+    } else if (knowledge.rate == 1) {
+      setSeverity('success')
+      setSeverityMessege('Good')
+    } else {
+      setSeverity('warning')
+      setSeverityMessege('Bad')
+    }
   }
 
   const handleCancel = () => {
@@ -224,7 +238,7 @@ const List = () => {
                 <h3>{value.date}</h3>
                 <h3>{value.title}</h3>
                 <p>{value.body}</p>
-                <p>{value.rate}</p>
+                <Alert severity={severity}>{severityMessege}</Alert>
               </div>
             ) : (
               ''
