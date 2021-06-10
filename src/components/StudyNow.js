@@ -102,14 +102,16 @@ export default function StudyNow() {
   return (
     <Paper className={classes.paper}>
       <div>
-        <p>{items[currentIndex].title}</p>
+        <h3>{items[currentIndex].title}</h3>
+        {!answerDisplay && (
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={() => showAnswer(currentIndex)}>
+            Show answer
+          </Button>
+        )}
 
-        <Button
-          variant="outlined"
-          color="primary"
-          onClick={() => showAnswer(currentIndex)}>
-          Show answer
-        </Button>
         {answerDisplay && (
           <div>
             <div id="body">{items[currentIndex].body}</div>
