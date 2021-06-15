@@ -1,5 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
+import Editor from 'rich-markdown-editor'
+import styled from 'styled-components'
 import {
   TextField,
   Menu,
@@ -33,6 +35,28 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
+const exampleText = `
+# Hello Advocate Pod
+
+## H2
+
+### H3
+
+#### H4
+
+This is a markdown paragraph.
+
+- unordered lists
+- lists
+[this is a link](google.com)
+1. numbered
+2. lists
+
+`
+let bodyText = `
+
+`
+
 const InputForm = ({ buttonText, value, handleCancel }) => {
   console.log('value' + value)
   const id = value !== null ? value.id : null
@@ -40,7 +64,7 @@ const InputForm = ({ buttonText, value, handleCancel }) => {
   const todayString = today.toISOString().slice(0, 10)
   const [date, setDate] = useState(value !== null ? value.date : todayString)
   const [title, setTitle] = useState(value !== null ? value.title : '')
-  const [body, setBody] = useState(value !== null ? value.body : '')
+  // const [body, setBody] = useState(value !== null ? value.body : '')
   const [topic, setTopic] = useState(value !== null ? value.topic : '')
   const [rate, setRate] = useState(value !== null ? value.rate : 0)
 
@@ -48,15 +72,11 @@ const InputForm = ({ buttonText, value, handleCancel }) => {
 
   const classes = useStyles()
 
-  // }
-
   const change = evt => {
     const name = evt.target.name
     const newValue = evt.target.value
     if (name === 'Title') {
       setTitle(newValue)
-    } else if (name === 'Body') {
-      setBody(newValue)
     } else if (name == 'Topic') {
       setTopic(newValue)
     } else {
@@ -69,35 +89,12 @@ const InputForm = ({ buttonText, value, handleCancel }) => {
   const onFinish = () => {
     // updateFunction function-iin parameter-eer form-iin valuenuudaas gadna id-g nemj yavuulj bna.
     if (id !== null) {
-      updateFunction(id, date, title, body, topic, rate, dispatch)
+      updateFunction(id, date, title, bodyText, topic, rate, dispatch)
     } else {
-      addFunction(id, date, title, body, topic, rate, dispatch)
+      addFunction(id, date, title, bodyText, topic, rate, dispatch)
     }
     handleCancel()
   }
-  // const MenuItemEgen = () => {
-  //   if (value == null) {
-  //     return (
-  //       <div>
-  //         <MenuItem value="0">New</MenuItem>
-  //         <MenuItem value="1" disabled>
-  //           Good
-  //         </MenuItem>
-  //         <MenuItem value="2" disabled>
-  //           Bad
-  //         </MenuItem>
-  //       </div>
-  //     )
-  //   } else {
-  //     return (
-  //       <div>
-  //         <MenuItem value="0">New</MenuItem>
-  //         <MenuItem value="1">Good</MenuItem>
-  //         <MenuItem value="2">Bad</MenuItem>
-  //       </div>
-  //     )
-  //   }
-  // }
 
   return (
     <form noValidate autoComplete="off">
@@ -130,7 +127,21 @@ const InputForm = ({ buttonText, value, handleCancel }) => {
           variant="outlined"
         />
       </FormControl>
-      <FormControl fullWidth className={classes.formControl}>
+      <FormControl fullWidth variant="outlined" className={classes.formControl}>
+        <Editor
+          readOnly={false}
+          placeholder="
+          Here is Mark Down Editor. Write BODY here..."
+          onClickLink={() => {
+            console.log('click')
+          }}
+          onChange={value => {
+            bodyText = value()
+            console.log(bodyText)
+          }}
+        />
+      </FormControl>
+      {/* <FormControl fullWidth className={classes.formControl}>
         <TextField
           id="body"
           name="Body"
@@ -141,7 +152,8 @@ const InputForm = ({ buttonText, value, handleCancel }) => {
           defaultValue={body}
           variant="outlined"
         />
-      </FormControl>
+      </FormControl> */}
+
       <FormControl variant="outlined" className={classes.formControl}>
         <InputLabel id="demo-simple-select-filled-label">Topic</InputLabel>
         <Select name="Topic" value={topic} onChange={change} label="Topic">

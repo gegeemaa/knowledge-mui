@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import Editor from 'rich-markdown-editor'
 import axios from '../axios-knowledges'
 import { makeStyles } from '@material-ui/core/styles'
 import {
@@ -28,6 +29,7 @@ import VisibilityIcon from '@material-ui/icons/Visibility'
 import Modal from './Modal'
 import Grid from '@material-ui/core/Grid'
 import Alert from '@material-ui/lab/Alert'
+import { TrendingUpOutlined } from '@material-ui/icons'
 
 // import InputForm from '../../components/form'
 
@@ -237,7 +239,7 @@ const List = () => {
               <div>
                 <h3>{value.date}</h3>
                 <h3>{value.title}</h3>
-                <p>{value.body}</p>
+                <Editor defaultValue={value.body} readOnly={true} />
                 <Alert severity={severity}>{severityMessege}</Alert>
               </div>
             ) : (
