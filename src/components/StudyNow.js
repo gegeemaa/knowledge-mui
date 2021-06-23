@@ -11,6 +11,7 @@ import {
 } from '../redux/actions/knowledgeActions'
 import { Block, RowingSharp } from '@material-ui/icons'
 import { GridLeftEmptyCell } from '@material-ui/data-grid'
+// import { RateButtonComponent } from 'RateButtonComponent'
 
 const useStyles = makeStyles({
   paper: {
@@ -115,6 +116,8 @@ export default function StudyNow() {
         {answerDisplay && (
           <div>
             <div id="body">{items[currentIndex].body}</div>
+            {/* <RateButtonComponent cardCategory={cardCategory} /> */}
+
             <Button
               variant="outlined"
               color="primary"

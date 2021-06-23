@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from 'react'
+import { React, useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import Editor from 'rich-markdown-editor'
 import axios from '../axios-knowledges'
@@ -30,6 +30,7 @@ import Modal from './Modal'
 import Grid from '@material-ui/core/Grid'
 import Alert from '@material-ui/lab/Alert'
 import { TrendingUpOutlined } from '@material-ui/icons'
+// import getKnowledges from '../thunk/getKnowledges'
 
 // import InputForm from '../../components/form'
 
