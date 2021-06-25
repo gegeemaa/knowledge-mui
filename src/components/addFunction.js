@@ -11,6 +11,7 @@ export const addFunction = (id, date, title, body, topic, rate, dispatch) => {
       topic,
       rate,
       user_id: 'GEREL_85',
+      delay_time: '',
     }
     // redux-ruu yavuulj bna
     dispatch(enter(knowledge))

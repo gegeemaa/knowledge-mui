@@ -2,6 +2,7 @@ import { React, useState, useEffect } from 'react'
 import clsx from 'clsx'
 import { useSelector, useDispatch } from 'react-redux'
 import axios from '../axios-knowledges'
+import RateButtonComponent from './RateButtonComponent'
 import { Paper, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import {
@@ -9,9 +10,8 @@ import {
   // deleteRow,
   // updateRow,
 } from '../redux/actions/knowledgeActions'
-import { Block, RowingSharp } from '@material-ui/icons'
+import { Block, ContactsOutlined, RowingSharp } from '@material-ui/icons'
 import { GridLeftEmptyCell } from '@material-ui/data-grid'
-// import { RateButtonComponent } from 'RateButtonComponent'
 
 const useStyles = makeStyles({
   paper: {
@@ -36,6 +36,10 @@ export default function StudyNow() {
   const [answerDisplay, setAnswerDisplay] = useState(false)
   const [currentIndex, setIndex] = useState(0)
   const [answer, setAnswer] = useState('')
+  const [delayTime, setDelayTime] = useState('')
+
+  let today = new Date()
+
   let data = []
 
   // eniig daraa ni tusdaa component bolgoh
@@ -55,6 +59,7 @@ export default function StudyNow() {
           title: el[1].title,
           body: el[1].body,
           topic: el[1].topic,
+          rate: el[1].rate,
         }))
         //Redux-ruu firebase DB-ees avsan ogogdloo nemj bna.
         dispatch(enterMultiple(data))
@@ -74,16 +79,51 @@ export default function StudyNow() {
     console.log('Lenth' + items.length)
   }
 
-  const next = arg => {
+  // const next = arg => {
+  //   // console.log('Hello' + currentIndex)
+  //   setIndex(currentIndex + 1)
+  //   setAnswerDisplay(false)
+  //   if (arg == 'good') {
+  //     // axios.post('/knowledges.json', knowledge).then(response => {
+  //     //   dispatch(updateID({ ...knowledge, id: response.data.name }))
+  //     // })
+  //   } else if (arg == 'bad') {
+  //   }
+  // }
+
+  const next = (buttonName, item, cardCategory) => {
     // console.log('Hello' + currentIndex)
     setIndex(currentIndex + 1)
     setAnswerDisplay(false)
-    if (arg == 'good') {
-      // axios.post('/knowledges.json', knowledge).then(response => {
-      //   dispatch(updateID({ ...knowledge, id: response.data.name }))
-      // })
-    } else if (arg == 'bad') {
+    console.log(buttonName, cardCategory)
+    if (buttonName === 'again' && cardCategory === 0) {
+      today.setMinutes(today.getMinutes() + 10)
+      setDelayTime(today.toString())
+      // // send data to Firebase database
+
+      axios
+        .put('/knowledges/' + item.id + '.json', {
+          ...item,
+          delay_time: today.toString(),
+        })
+        .then(response => {})
+      console.log(delayTime)
+      console.log('Hello')
     }
+
+    // if (buttonName === 'good' && cardCategory === 0) {
+    //   setDelayTime(600)
+    // }
+    // if (buttonName === 'easy' && cardCategory === 0) {
+    //   setDelayTime(4)
+    // }
+
+    // if (arg == 'good') {
+    //   // axios.post('/knowledges.json', knowledge).then(response => {
+    //   //   dispatch(updateID({ ...knowledge, id: response.data.name }))
+    //   // })
+    // } else if (arg == 'bad') {
+    // }
   }
 
   if (items.length === 0) {
@@ -104,6 +144,7 @@ export default function StudyNow() {
     <Paper className={classes.paper}>
       <div>
         <h3>{items[currentIndex].title}</h3>
+
         {!answerDisplay && (
           <Button
             variant="outlined"
@@ -116,9 +157,12 @@ export default function StudyNow() {
         {answerDisplay && (
           <div>
             <div id="body">{items[currentIndex].body}</div>
-            {/* <RateButtonComponent cardCategory={cardCategory} /> */}
-
-            <Button
+            <RateButtonComponent
+              item={items[currentIndex]}
+              cardCategory={items[currentIndex].rate}
+              onClick={next}
+            />
+            {/* <Button
               variant="outlined"
               color="primary"
               onClick={() => next('good')}>
@@ -129,7 +173,7 @@ export default function StudyNow() {
               color="secondary"
               onClick={() => next('bad')}>
               Bad
-            </Button>
+            </Button> */}
           </div>
         )}
       </div>

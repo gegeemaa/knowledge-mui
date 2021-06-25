@@ -1,30 +1,32 @@
 import React from 'react'
+import { Button } from '@material-ui/core'
 
-export default function RateButtonComponent({ cardCategory }) {
+const RateButtonComponent = ({ item, cardCategory, onClick }) => {
+  console.log(cardCategory)
   return (
     <div>
-      {cardCategory === '0' && (
+      {cardCategory === 0 && (
         <div>
           {' '}
           1 minute
           <Button
             variant="outlined"
             color="primary"
-            onClick={() => next('again')}>
+            onClick={() => onClick('again', item, cardCategory)}>
             Again
           </Button>
           10 minutes
           <Button
             variant="outlined"
             color="primary"
-            onClick={() => next('good')}>
+            onClick={() => onClick('good', item, cardCategory)}>
             Good
           </Button>
           4 days
           <Button
             variant="outlined"
             color="primary"
-            onClick={() => next('easy')}>
+            onClick={() => onClick('easy', item, cardCategory)}>
             Easy
           </Button>
         </div>
@@ -32,3 +34,5 @@ export default function RateButtonComponent({ cardCategory }) {
     </div>
   )
 }
+
+export default RateButtonComponent

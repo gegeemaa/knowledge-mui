@@ -19,6 +19,7 @@ const knowledgeReducer = (state = initialState, action) => {
           body: action.body,
           topic: action.topic,
           rate: 0,
+          delay_time: '',
         },
       ],
     }
