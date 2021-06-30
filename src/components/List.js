@@ -86,7 +86,10 @@ const List = () => {
           body: el[1].body,
           topic: el[1].topic,
           rate: el[1].rate,
+          delay_time: el[1].delay_time,
         }))
+        // const sortedData = data.slice().sort((a, b) => b.date - a.date)
+        // sortedData
         //Redux-ruu firebase DB-ees avsan ogogdloo nemj bna.
         dispatch(enterMultiple(data))
       })
@@ -203,20 +206,23 @@ const List = () => {
             <Table className={classes.table} aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell>Date</TableCell>
+                  <TableCell>Study date</TableCell>
                   <TableCell>Title</TableCell>
                   <TableCell>Topic</TableCell>
+                  <TableCell>Created date</TableCell>
                   <TableCell align="right">Action</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {rows.map(knowledge => (
                   <TableRow key={knowledge.id}>
+                    <TableCell>{knowledge.delay_time}</TableCell>
+                    <TableCell>{knowledge.title}</TableCell>
+                    <TableCell>{knowledge.topic}</TableCell>
+
                     <TableCell component="th" scope="row">
                       {knowledge.date}
                     </TableCell>
-                    <TableCell>{knowledge.title}</TableCell>
-                    <TableCell>{knowledge.topic}</TableCell>
                     <TableCell align="right">
                       <a onClick={() => seeItem(knowledge)}>
                         <VisibilityIcon />
