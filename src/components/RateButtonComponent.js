@@ -5,7 +5,9 @@ const RateButtonComponent = ({
   item,
   cardCategory,
   onClick,
-  delay_time_text,
+  delayTimeButtonHardText,
+  delayTimeButtonGoodText,
+  delayTimeButtonEasyText,
 }) => {
   console.log(cardCategory)
   return (
@@ -72,21 +74,21 @@ const RateButtonComponent = ({
             onClick={() => onClick('again', item, cardCategory)}>
             Again
           </Button>
-          2 days
+          {delayTimeButtonHardText}
           <Button
             variant="outlined"
             color="primary"
             onClick={() => onClick('hard', item, cardCategory)}>
             Hard
           </Button>
-          {delay_time_text}
+          {delayTimeButtonGoodText}
           <Button
             variant="outlined"
             color="primary"
             onClick={() => onClick('good', item, cardCategory)}>
             Good
           </Button>
-          {delay_time_text}
+          {delayTimeButtonEasyText}
           <Button
             variant="outlined"
             color="primary"

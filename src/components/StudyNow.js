@@ -37,8 +37,9 @@ export default function StudyNow() {
   const [currentIndex, setIndex] = useState(0)
   const [answer, setAnswer] = useState('')
   const [delayTime, setDelayTime] = useState('')
-  // const [delayTimeText, setDelayTimeText] = useState('')
-  let delayTimeText
+  const [delayTimeButtonHardText, setDelayTimeButtonHardText] = useState('')
+  const [delayTimeButtonGoodText, setDelayTimeButtonGoodText] = useState('')
+  const [delayTimeButtonEasyText, setDelayTimeButtonEasyText] = useState('')
 
   let today = new Date()
 
@@ -110,21 +111,68 @@ export default function StudyNow() {
           text = minutes + ' minutes'
         }
       } else {
-        text = hours + ' hours, '
+        text = hours + ' hours '
       }
     } else {
-      text = days + ' days, '
+      text = days + ' days '
     }
 
     return text
   }
 
+  let delayTimeTextHard
+  let delayTimeTextGood
+  let delayTimeTextEasy
+  console.log('ITEMS:')
+  console.log(items)
+
+  useEffect(() => {
+    if (
+      (items[currentIndex].rate === 1 || items[currentIndex].rate === 2) &&
+      items[currentIndex].severity === 'hard'
+    ) {
+      if (Math.floor(items[currentIndex].delay_time_ms) > 1) {
+        delayTimeTextHard = Date.daysBetween(
+          items[currentIndex].delay_time_ms / 2
+        )
+      } else {
+        delayTimeTextHard = '1 day'
+      }
+    } else if (
+      (items[currentIndex].rate === 1 || items[currentIndex].rate === 2) &&
+      items[currentIndex].severity === 'good'
+    ) {
+      if (Math.floor(items[currentIndex].delay_time_ms) > 1) {
+        delayTimeTextHard = Date.daysBetween(
+          items[currentIndex].delay_time_ms / 2
+        )
+      } else {
+        delayTimeTextHard = '1 day'
+      }
+      delayTimeTextGood = Date.daysBetween(
+        items[currentIndex].delay_time_ms * 2
+      )
+      delayTimeTextEasy = Date.daysBetween(
+        items[currentIndex].delay_time_ms * 3
+      )
+    }
+    // items[currentIndex].rate === 1 || items[currentIndex].rate === 2) && items[currentIndex].severity === 'easy'
+    else {
+      delayTimeTextEasy = Date.daysBetween(
+        items[currentIndex].delay_time_ms * 3
+      )
+    }
+    setDelayTimeButtonHardText(delayTimeTextHard)
+    setDelayTimeButtonGoodText(delayTimeTextGood)
+    setDelayTimeButtonEasyText(delayTimeTextEasy)
+  }, [items])
+
   const next = (buttonName, item, cardCategory) => {
-    // console.log('Hello' + currentIndex)
+    let pervios_delay_time_ms = items[currentIndex].delay_time_ms
     setIndex(currentIndex + 1)
     setAnswerDisplay(false)
     console.log(buttonName, cardCategory)
-    let pervios_delay_time_ms = '1000'
+
     let delay_time_ms
     //CardCategory is new
     if (buttonName === 'again' && cardCategory === 0) {
@@ -136,6 +184,7 @@ export default function StudyNow() {
     } else if (buttonName === 'easy' && cardCategory === 0) {
       today.setDate(today.getDate() + 4)
       delay_time_ms = 4 * 60 * 60 * 24 * 1000
+      cardCategory = 1
     }
     //CardCategory is learning
     else if (buttonName === 'again' && cardCategory === 1) {
@@ -144,21 +193,24 @@ export default function StudyNow() {
     } else if (buttonName === 'good' && cardCategory === 1) {
       today.setDate(today.getDate() + 1)
       delay_time_ms = 1 * 60 * 60 * 24 * 1000
+      cardCategory = 2
     } else if (buttonName === 'easy' && cardCategory === 1) {
       today.setDate(today.getDate() + 4)
       delay_time_ms = 4 * 60 * 60 * 24 * 1000
+      cardCategory = 2
     }
     //CardCategory is review
     else if (buttonName === 'again' && cardCategory === 2) {
       today.setMinutes(today.getMinutes() + 10)
       delay_time_ms = 10 * 60 * 1000
     } else if (buttonName === 'hard' && cardCategory === 2) {
+      // Eniig daraa ni zasna
       today.setDate(today.getDate() + 2)
       delay_time_ms = 2 * 60 * 60 * 24 * 1000
     } else if (buttonName === 'good' && cardCategory === 2) {
-      delay_time_ms = pervios_delay_time_ms * 3
+      delay_time_ms = pervios_delay_time_ms * 2
     } else if (buttonName === 'easy' && cardCategory === 2) {
-      delay_time_ms = pervios_delay_time_ms * 4
+      delay_time_ms = pervios_delay_time_ms * 3
     }
 
     setDelayTime(today.toISOString().slice(0, 19))
@@ -168,6 +220,7 @@ export default function StudyNow() {
         ...item,
         delay_time: today.toISOString().slice(0, 19),
         delay_time_ms: delay_time_ms,
+        rate: cardCategory,
       })
       .then(response => {})
     console.log('Hello')
@@ -186,28 +239,6 @@ export default function StudyNow() {
       </Paper>
     )
   }
-
-  if (
-    (items[currentIndex].rate === 1 || items[currentIndex].rate === 2) &&
-    items[currentIndex].severity === 'hard'
-  ) {
-    if (Math.floor(items[currentIndex].delay_time_ms) > 1) {
-      delayTimeText = Date.daysBetween(items[currentIndex].delay_time_ms / 2)
-    } else {
-      delayTimeText = '1 day'
-    }
-  } else if (
-    (items[currentIndex].rate === 1 || items[currentIndex].rate === 2) &&
-    items[currentIndex].severity === 'good'
-  ) {
-    delayTimeText = Date.daysBetween(items[currentIndex].delay_time_ms * 2)
-  } else if (
-    (items[currentIndex].rate === 1 || items[currentIndex].rate === 2) &&
-    items[currentIndex].severity === 'easy'
-  ) {
-    delayTimeText = Date.daysBetween(items[currentIndex].delay_time_ms * 3)
-  }
-  // setDelayTimeText(delayTimeText)
 
   return (
     <Paper className={classes.paper}>
@@ -230,8 +261,9 @@ export default function StudyNow() {
               item={items[currentIndex]}
               cardCategory={items[currentIndex].rate}
               severity={items[currentIndex].severity}
-              delay_time_ms={items[currentIndex].delay_time_ms}
-              delay_time_text={delayTimeText}
+              delayTimeButtonHardText={delayTimeButtonHardText}
+              delayTimeButtonGoodText={delayTimeButtonGoodText}
+              delayTimeButtonEasyText={delayTimeButtonEasyText}
               onClick={next}
             />
           </div>
