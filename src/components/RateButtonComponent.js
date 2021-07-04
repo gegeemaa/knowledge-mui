@@ -1,7 +1,12 @@
 import React from 'react'
 import { Button } from '@material-ui/core'
 
-const RateButtonComponent = ({ item, cardCategory, onClick }) => {
+const RateButtonComponent = ({
+  item,
+  cardCategory,
+  onClick,
+  delay_time_text,
+}) => {
   console.log(cardCategory)
   return (
     <div>
@@ -74,14 +79,14 @@ const RateButtonComponent = ({ item, cardCategory, onClick }) => {
             onClick={() => onClick('hard', item, cardCategory)}>
             Hard
           </Button>
-          {good_delay_time_text}
+          {delay_time_text}
           <Button
             variant="outlined"
             color="primary"
             onClick={() => onClick('good', item, cardCategory)}>
             Good
           </Button>
-          {easy_delay_time_text}
+          {delay_time_text}
           <Button
             variant="outlined"
             color="primary"

@@ -37,6 +37,8 @@ export default function StudyNow() {
   const [currentIndex, setIndex] = useState(0)
   const [answer, setAnswer] = useState('')
   const [delayTime, setDelayTime] = useState('')
+  // const [delayTimeText, setDelayTimeText] = useState('')
+  let delayTimeText
 
   let today = new Date()
 
@@ -89,9 +91,10 @@ export default function StudyNow() {
   }
 
   // 2 date-iin zoruug day, hour, minutes, second-eer ilerhiileh function
-  Date.daysBetween = function (delay_time_ms, p2) {
+  Date.daysBetween = function (delay_time_ms) {
+    var text = ''
     //take out milliseconds
-    delay_time_ms = (delay_time_ms * p2) / 1000
+    delay_time_ms = delay_time_ms / 1000
     var seconds = Math.floor(delay_time_ms % 60)
     delay_time_ms = delay_time_ms / 60
     var minutes = Math.floor(delay_time_ms % 60)
@@ -99,21 +102,22 @@ export default function StudyNow() {
     var hours = Math.floor(delay_time_ms % 24)
     var days = Math.floor(delay_time_ms / 24)
 
-    return (
-      days +
-      ' days, ' +
-      hours +
-      ' hours, ' +
-      minutes +
-      ' minutes, and ' +
-      seconds +
-      ' seconds'
-    )
-  }
+    if (days === 0) {
+      if (hours === 0) {
+        if (minutes === 0) {
+          text = seconds + ' seconds'
+        } else {
+          text = minutes + ' minutes'
+        }
+      } else {
+        text = hours + ' hours, '
+      }
+    } else {
+      text = days + ' days, '
+    }
 
-  //Set the two dates
-  var Jan1st2010 = new Date(2021, 5, 29)
-  var today = new Date()
+    return text
+  }
 
   const next = (buttonName, item, cardCategory) => {
     // console.log('Hello' + currentIndex)
@@ -121,6 +125,7 @@ export default function StudyNow() {
     setAnswerDisplay(false)
     console.log(buttonName, cardCategory)
     let pervios_delay_time_ms = '1000'
+    let delay_time_ms
     //CardCategory is new
     if (buttonName === 'again' && cardCategory === 0) {
       today.setMinutes(today.getMinutes() + 1)
@@ -166,19 +171,6 @@ export default function StudyNow() {
       })
       .then(response => {})
     console.log('Hello')
-    // if (buttonName === 'good' && cardCategory === 0) {
-    //   setDelayTime(600)
-    // }
-    // if (buttonName === 'easy' && cardCategory === 0) {
-    //   setDelayTime(4)
-    // }
-
-    // if (arg == 'good') {
-    //   // axios.post('/knowledges.json', knowledge).then(response => {
-    //   //   dispatch(updateID({ ...knowledge, id: response.data.name }))
-    //   // })
-    // } else if (arg == 'bad') {
-    // }
   }
 
   if (items.length === 0) {
@@ -195,15 +187,27 @@ export default function StudyNow() {
     )
   }
 
-  const [delayTimeText, setDelayTimeText] = useState('')
-
   if (
-    items[currentIndex].rate === 1 &&
+    (items[currentIndex].rate === 1 || items[currentIndex].rate === 2) &&
+    items[currentIndex].severity === 'hard'
+  ) {
+    if (Math.floor(items[currentIndex].delay_time_ms) > 1) {
+      delayTimeText = Date.daysBetween(items[currentIndex].delay_time_ms / 2)
+    } else {
+      delayTimeText = '1 day'
+    }
+  } else if (
+    (items[currentIndex].rate === 1 || items[currentIndex].rate === 2) &&
     items[currentIndex].severity === 'good'
   ) {
-    delay_time_ms * 3
-    setDelayTimeText()
+    delayTimeText = Date.daysBetween(items[currentIndex].delay_time_ms * 2)
+  } else if (
+    (items[currentIndex].rate === 1 || items[currentIndex].rate === 2) &&
+    items[currentIndex].severity === 'easy'
+  ) {
+    delayTimeText = Date.daysBetween(items[currentIndex].delay_time_ms * 3)
   }
+  // setDelayTimeText(delayTimeText)
 
   return (
     <Paper className={classes.paper}>
@@ -225,23 +229,11 @@ export default function StudyNow() {
             <RateButtonComponent
               item={items[currentIndex]}
               cardCategory={items[currentIndex].rate}
-              severity={severity}
-              delay_time_ms={delay_time_ms}
-              delay_time_text={delay_time_text}
+              severity={items[currentIndex].severity}
+              delay_time_ms={items[currentIndex].delay_time_ms}
+              delay_time_text={delayTimeText}
               onClick={next}
             />
-            {/* <Button
-              variant="outlined"
-              color="primary"
-              onClick={() => next('good')}>
-              Good
-            </Button>
-            <Button
-              variant="outlined"
-              color="secondary"
-              onClick={() => next('bad')}>
-              Bad
-            </Button> */}
           </div>
         )}
       </div>
