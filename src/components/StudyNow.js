@@ -127,41 +127,15 @@ export default function StudyNow() {
   console.log(items)
 
   useEffect(() => {
-    if (
-      (items[currentIndex].rate === 1 || items[currentIndex].rate === 2) &&
-      items[currentIndex].severity === 'hard'
-    ) {
-      if (Math.floor(items[currentIndex].delay_time_ms) > 1) {
-        delayTimeTextHard = Date.daysBetween(
-          items[currentIndex].delay_time_ms / 2
-        )
-      } else {
-        delayTimeTextHard = '1 day'
-      }
-    } else if (
-      (items[currentIndex].rate === 1 || items[currentIndex].rate === 2) &&
-      items[currentIndex].severity === 'good'
-    ) {
-      if (Math.floor(items[currentIndex].delay_time_ms) > 1) {
-        delayTimeTextHard = Date.daysBetween(
-          items[currentIndex].delay_time_ms / 2
-        )
-      } else {
-        delayTimeTextHard = '1 day'
-      }
-      delayTimeTextGood = Date.daysBetween(
-        items[currentIndex].delay_time_ms * 2
+    if (Math.floor(items[currentIndex].delay_time_ms) > 1) {
+      delayTimeTextHard = Date.daysBetween(
+        items[currentIndex].delay_time_ms / 2
       )
-      delayTimeTextEasy = Date.daysBetween(
-        items[currentIndex].delay_time_ms * 3
-      )
+    } else {
+      delayTimeTextHard = '1 day'
     }
-    // items[currentIndex].rate === 1 || items[currentIndex].rate === 2) && items[currentIndex].severity === 'easy'
-    else {
-      delayTimeTextEasy = Date.daysBetween(
-        items[currentIndex].delay_time_ms * 3
-      )
-    }
+    delayTimeTextGood = Date.daysBetween(items[currentIndex].delay_time_ms * 2)
+    delayTimeTextEasy = Date.daysBetween(items[currentIndex].delay_time_ms * 3)
     setDelayTimeButtonHardText(delayTimeTextHard)
     setDelayTimeButtonGoodText(delayTimeTextGood)
     setDelayTimeButtonEasyText(delayTimeTextEasy)
