@@ -156,7 +156,7 @@ const List = () => {
     } else {
       setButtonText('Add')
     }
-    console.log('Button:' + buttonText)
+    // console.log('Button:' + buttonText)
 
     setOpen(true)
     setValue(knowledge)
