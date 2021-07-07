@@ -122,14 +122,17 @@ export default function StudyNow() {
   let delayTimeTextHard
   let delayTimeTextGood
   let delayTimeTextEasy
-
-  if (Math.floor(items[currentIndex].delay_time_ms) > 1) {
-    delayTimeTextHard = Date.daysBetween(items[currentIndex].delay_time_ms / 2)
-  } else {
-    delayTimeTextHard = '1 day'
+  if (currentIndex === 0) {
+    if (Math.floor(items[currentIndex].delay_time_ms) > 1) {
+      delayTimeTextHard = Date.daysBetween(
+        items[currentIndex].delay_time_ms / 2
+      )
+    } else {
+      delayTimeTextHard = '1 day'
+    }
+    delayTimeTextGood = Date.daysBetween(items[currentIndex].delay_time_ms * 2)
+    delayTimeTextEasy = Date.daysBetween(items[currentIndex].delay_time_ms * 3)
   }
-  delayTimeTextGood = Date.daysBetween(items[currentIndex].delay_time_ms * 2)
-  delayTimeTextEasy = Date.daysBetween(items[currentIndex].delay_time_ms * 3)
 
   const [delayTimeButtonHardText, setDelayTimeButtonHardText] =
     useState(delayTimeTextHard)
@@ -196,18 +199,25 @@ export default function StudyNow() {
       .then(response => {})
     // console.log('Hello')
 
-    if (Math.floor(items[currentIndex].delay_time_ms) > 1) {
-      delayTimeTextHard = Date.daysBetween(
-        items[currentIndex].delay_time_ms / 2
+    // Daraagiin cardnii button deerh hugatsaanuudiin tootsoololuudiig gargaj irne. Hamgiin suuliin kart bol shaardlagagui.
+    if (currentIndex < items.length) {
+      if (Math.floor(items[currentIndex].delay_time_ms) > 1) {
+        delayTimeTextHard = Date.daysBetween(
+          items[currentIndex].delay_time_ms / 2
+        )
+      } else {
+        delayTimeTextHard = '1 day'
+      }
+      delayTimeTextGood = Date.daysBetween(
+        items[currentIndex].delay_time_ms * 2
       )
-    } else {
-      delayTimeTextHard = '1 day'
+      delayTimeTextEasy = Date.daysBetween(
+        items[currentIndex].delay_time_ms * 3
+      )
+      setDelayTimeButtonHardText(delayTimeTextHard)
+      setDelayTimeButtonGoodText(delayTimeTextGood)
+      setDelayTimeButtonEasyText(delayTimeTextEasy)
     }
-    delayTimeTextGood = Date.daysBetween(items[currentIndex].delay_time_ms * 2)
-    delayTimeTextEasy = Date.daysBetween(items[currentIndex].delay_time_ms * 3)
-    setDelayTimeButtonHardText(delayTimeTextHard)
-    setDelayTimeButtonGoodText(delayTimeTextGood)
-    setDelayTimeButtonEasyText(delayTimeTextEasy)
   }
 
   if (items.length === 0) {
@@ -222,37 +232,37 @@ export default function StudyNow() {
         <p>Card-iig ajillaj duuslaa. Bayarlalaa!</p>
       </Paper>
     )
+  } else {
+    return (
+      <Paper className={classes.paper}>
+        <div>
+          <h3>{items[currentIndex].title}</h3>
+
+          {!answerDisplay && (
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={() => showAnswer(currentIndex)}>
+              Show answer
+            </Button>
+          )}
+
+          {answerDisplay && (
+            <div>
+              <div id="body">{items[currentIndex].body}</div>
+              <RateButtonComponent
+                item={items[currentIndex]}
+                cardCategory={items[currentIndex].rate}
+                severity={items[currentIndex].severity}
+                delayTimeButtonHardText={delayTimeButtonHardText}
+                delayTimeButtonGoodText={delayTimeButtonGoodText}
+                delayTimeButtonEasyText={delayTimeButtonEasyText}
+                onClick={next}
+              />
+            </div>
+          )}
+        </div>
+      </Paper>
+    )
   }
-
-  return (
-    <Paper className={classes.paper}>
-      <div>
-        <h3>{items[currentIndex].title}</h3>
-
-        {!answerDisplay && (
-          <Button
-            variant="outlined"
-            color="primary"
-            onClick={() => showAnswer(currentIndex)}>
-            Show answer
-          </Button>
-        )}
-
-        {answerDisplay && (
-          <div>
-            <div id="body">{items[currentIndex].body}</div>
-            <RateButtonComponent
-              item={items[currentIndex]}
-              cardCategory={items[currentIndex].rate}
-              severity={items[currentIndex].severity}
-              delayTimeButtonHardText={delayTimeButtonHardText}
-              delayTimeButtonGoodText={delayTimeButtonGoodText}
-              delayTimeButtonEasyText={delayTimeButtonEasyText}
-              onClick={next}
-            />
-          </div>
-        )}
-      </div>
-    </Paper>
-  )
 }
