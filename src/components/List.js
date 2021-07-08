@@ -88,6 +88,8 @@ const List = () => {
           rate: el[1].rate,
           delay_time: el[1].delay_time,
         }))
+
+        console.log('LISTees hevlej bna')
         // const sortedData = data.slice().sort((a, b) => b.date - a.date)
         // sortedData
         //Redux-ruu firebase DB-ees avsan ogogdloo nemj bna.

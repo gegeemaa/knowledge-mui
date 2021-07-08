@@ -12,6 +12,7 @@ import {
 } from '../redux/actions/knowledgeActions'
 import { Block, ContactsOutlined, RowingSharp } from '@material-ui/icons'
 import { GridLeftEmptyCell } from '@material-ui/data-grid'
+import { daysBetween } from '../functions/functions'
 
 const useStyles = makeStyles({
   paper: {
@@ -26,9 +27,12 @@ const useStyles = makeStyles({
   buttonBlock: {
     display: 'block',
   },
+  fontBold: {
+    fontWeight: '900',
+  },
 })
 
-export default function StudyNow() {
+const StudyNow = () => {
   const dispatch = useDispatch()
   const classes = useStyles()
   const knowledges = useSelector(state => state.list)
@@ -37,6 +41,13 @@ export default function StudyNow() {
   const [currentIndex, setIndex] = useState(0)
   const [answer, setAnswer] = useState('')
   const [delayTime, setDelayTime] = useState('')
+  const [delayTimeButtonHardText, setDelayTimeButtonHardText] = useState('')
+  const [delayTimeButtonGoodText, setDelayTimeButtonGoodText] = useState('')
+  const [delayTimeButtonEasyText, setDelayTimeButtonEasyText] = useState('')
+
+  let delayTimeTextHard
+  let delayTimeTextGood
+  let delayTimeTextEasy
 
   let today = new Date()
 
@@ -74,10 +85,30 @@ export default function StudyNow() {
         console.log(data)
         //Redux-ruu firebase DB-ees avsan ogogdloo nemj bna.
         dispatch(enterMultiple(data))
+        if (currentIndex === 0 && items[currentIndex].rate === 2) {
+          if (Math.floor(items[currentIndex].delay_time_ms) > 1) {
+            delayTimeTextHard = daysBetween(
+              items[currentIndex].delay_time_ms / 2
+            )
+          } else {
+            delayTimeTextHard = '1 day'
+          }
+          console.log('GOGO:')
+          console.log(items[currentIndex].delay_time_ms)
+          console.log('URJUULSEN')
+          console.log(items[currentIndex].delay_time_ms * 2)
+          delayTimeTextGood = daysBetween(items[currentIndex].delay_time_ms * 2)
+          delayTimeTextEasy = daysBetween(items[currentIndex].delay_time_ms * 3)
+          setDelayTimeButtonHardText(delayTimeTextHard)
+          setDelayTimeButtonGoodText(delayTimeTextGood)
+          setDelayTimeButtonEasyText(delayTimeTextEasy)
+        }
       })
       .catch(error => {
         // console.log(error)
       })
+
+    console.log('StudyNow-aas hevlej bna.')
   }, [])
 
   useEffect(() => {
@@ -89,57 +120,6 @@ export default function StudyNow() {
     setAnswerDisplay(true)
     // console.log('Lenth' + items.length)
   }
-
-  // 2 date-iin zoruug day, hour, minutes, second-eer ilerhiileh function
-  Date.daysBetween = function (delay_time_ms) {
-    var text = ''
-    //take out milliseconds
-    delay_time_ms = delay_time_ms / 1000
-    var seconds = Math.floor(delay_time_ms % 60)
-    delay_time_ms = delay_time_ms / 60
-    var minutes = Math.floor(delay_time_ms % 60)
-    delay_time_ms = delay_time_ms / 60
-    var hours = Math.floor(delay_time_ms % 24)
-    var days = Math.floor(delay_time_ms / 24)
-
-    if (days === 0) {
-      if (hours === 0) {
-        if (minutes === 0) {
-          text = seconds + ' seconds'
-        } else {
-          text = minutes + ' minutes'
-        }
-      } else {
-        text = hours + ' hours '
-      }
-    } else {
-      text = days + ' days '
-    }
-
-    return text
-  }
-
-  let delayTimeTextHard
-  let delayTimeTextGood
-  let delayTimeTextEasy
-  if (currentIndex === 0) {
-    if (Math.floor(items[currentIndex].delay_time_ms) > 1) {
-      delayTimeTextHard = Date.daysBetween(
-        items[currentIndex].delay_time_ms / 2
-      )
-    } else {
-      delayTimeTextHard = '1 day'
-    }
-    delayTimeTextGood = Date.daysBetween(items[currentIndex].delay_time_ms * 2)
-    delayTimeTextEasy = Date.daysBetween(items[currentIndex].delay_time_ms * 3)
-  }
-
-  const [delayTimeButtonHardText, setDelayTimeButtonHardText] =
-    useState(delayTimeTextHard)
-  const [delayTimeButtonGoodText, setDelayTimeButtonGoodText] =
-    useState(delayTimeTextGood)
-  const [delayTimeButtonEasyText, setDelayTimeButtonEasyText] =
-    useState(delayTimeTextEasy)
 
   const next = (buttonName, item, cardCategory) => {
     let pervios_delay_time_ms = items[currentIndex].delay_time_ms
@@ -200,7 +180,7 @@ export default function StudyNow() {
     // console.log('Hello')
 
     // Daraagiin cardnii button deerh hugatsaanuudiin tootsoololuudiig gargaj irne. Hamgiin suuliin kart bol shaardlagagui.
-    if (currentIndex < items.length) {
+    if (currentIndex < items.length && items[currentIndex].rate === 2) {
       if (Math.floor(items[currentIndex].delay_time_ms) > 1) {
         delayTimeTextHard = Date.daysBetween(
           items[currentIndex].delay_time_ms / 2
@@ -229,7 +209,9 @@ export default function StudyNow() {
   } else if (currentIndex >= items.length) {
     return (
       <Paper className={classes.paper}>
-        <p>Card-iig ajillaj duuslaa. Bayarlalaa!</p>
+        <p className={classes.fontBold}>
+          Card-iig ajillaj duuslaa. Bayarlalaa!
+        </p>
       </Paper>
     )
   } else {
@@ -266,3 +248,4 @@ export default function StudyNow() {
     )
   }
 }
+export default StudyNow

@@ -6,6 +6,7 @@ export const enter = state => {
     title: state.title,
     body: state.body,
     topic: state.topic,
+    rate: state.rate,
 
     // rate: rate.state,
   }
