@@ -76,32 +76,37 @@ const StudyNow = () => {
           delay_time_ms: el[1].delay_time_ms,
         }))
         // Date-eer ni sortolj baina.
-        data.sort(function (a, b) {
-          var dateA = new Date(a.delay_time),
-            dateB = new Date(b.delay_time)
-          return dateA - dateB
-        })
-        console.log('Hello')
+        // data.sort(function (a, b) {
+        //   var dateA = new Date(a.delay_time),
+        //     dateB = new Date(b.delay_time)
+        //   return dateA - dateB
+        // })
+        console.log('Sain uu?')
         console.log(data)
-        //Redux-ruu firebase DB-ees avsan ogogdloo nemj bna.
-        dispatch(enterMultiple(data))
-        if (currentIndex === 0 && items[currentIndex].rate === 2) {
-          if (Math.floor(items[currentIndex].delay_time_ms) > 1) {
-            delayTimeTextHard = daysBetween(
-              items[currentIndex].delay_time_ms / 2
+        console.log(currentIndex)
+        console.log('URJUULSEN')
+
+        if (currentIndex === 0 && data[currentIndex].rate === 2) {
+          if (Math.floor(data[currentIndex].delay_time_ms) > 1) {
+            setDelayTimeButtonHardText(
+              daysBetween(data[currentIndex].delay_time_ms / 2)
             )
           } else {
-            delayTimeTextHard = '1 day'
+            setDelayTimeButtonHardText('1 day')
           }
-          console.log('GOGO:')
-          console.log(items[currentIndex].delay_time_ms)
-          console.log('URJUULSEN')
-          console.log(items[currentIndex].delay_time_ms * 2)
-          delayTimeTextGood = daysBetween(items[currentIndex].delay_time_ms * 2)
-          delayTimeTextEasy = daysBetween(items[currentIndex].delay_time_ms * 3)
-          setDelayTimeButtonHardText(delayTimeTextHard)
-          setDelayTimeButtonGoodText(delayTimeTextGood)
-          setDelayTimeButtonEasyText(delayTimeTextEasy)
+
+          console.log(delayTimeButtonHardText)
+          console.log(data)
+          console.log('SONIN yum be?')
+          setDelayTimeButtonGoodText(
+            daysBetween(data[currentIndex].delay_time_ms * 2)
+          )
+          setDelayTimeButtonEasyText(
+            daysBetween(data[currentIndex].delay_time_ms * 3)
+          )
+
+          //Redux-ruu firebase DB-ees avsan ogogdloo nemj bna.
+          dispatch(enterMultiple(data))
         }
       })
       .catch(error => {
@@ -120,6 +125,33 @@ const StudyNow = () => {
     setAnswerDisplay(true)
     // console.log('Lenth' + items.length)
   }
+
+  // // 2 date-iin zoruug day, hour, minutes, second-eer ilerhiileh function
+  // Date.daysBetween = function (delay_time_ms) {
+  //   var text = ''
+  //   //take out milliseconds
+  //   delay_time_ms = delay_time_ms / 1000
+  //   var seconds = Math.floor(delay_time_ms % 60)
+  //   delay_time_ms = delay_time_ms / 60
+  //   var minutes = Math.floor(delay_time_ms % 60)
+  //   delay_time_ms = delay_time_ms / 60
+  //   var hours = Math.floor(delay_time_ms % 24)
+  //   var days = Math.floor(delay_time_ms / 24)
+  //   if (days === 0) {
+  //     if (hours === 0) {
+  //       if (minutes === 0) {
+  //         text = seconds + ' seconds'
+  //       } else {
+  //         text = minutes + ' minutes'
+  //       }
+  //     } else {
+  //       text = hours + ' hours '
+  //     }
+  //   } else {
+  //     text = days + ' days '
+  //   }
+  //   return text
+  // }
 
   const next = (buttonName, item, cardCategory) => {
     let pervios_delay_time_ms = items[currentIndex].delay_time_ms
@@ -182,18 +214,12 @@ const StudyNow = () => {
     // Daraagiin cardnii button deerh hugatsaanuudiin tootsoololuudiig gargaj irne. Hamgiin suuliin kart bol shaardlagagui.
     if (currentIndex < items.length && items[currentIndex].rate === 2) {
       if (Math.floor(items[currentIndex].delay_time_ms) > 1) {
-        delayTimeTextHard = Date.daysBetween(
-          items[currentIndex].delay_time_ms / 2
-        )
+        delayTimeTextHard = daysBetween(items[currentIndex].delay_time_ms / 2)
       } else {
         delayTimeTextHard = '1 day'
       }
-      delayTimeTextGood = Date.daysBetween(
-        items[currentIndex].delay_time_ms * 2
-      )
-      delayTimeTextEasy = Date.daysBetween(
-        items[currentIndex].delay_time_ms * 3
-      )
+      delayTimeTextGood = daysBetween(items[currentIndex].delay_time_ms * 2)
+      delayTimeTextEasy = daysBetween(items[currentIndex].delay_time_ms * 3)
       setDelayTimeButtonHardText(delayTimeTextHard)
       setDelayTimeButtonGoodText(delayTimeTextGood)
       setDelayTimeButtonEasyText(delayTimeTextEasy)

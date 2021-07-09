@@ -1,8 +1,7 @@
 // 2 date-iin zoruug day, hour, minutes, second-eer ilerhiileh function
-Date.daysBetween = function (delay_time_ms) {
+export const daysBetween = function (delay_time_ms) {
   var text = ''
   //take out milliseconds
-  console.log(delay_time_ms)
   delay_time_ms = delay_time_ms / 1000
   var seconds = Math.floor(delay_time_ms % 60)
   delay_time_ms = delay_time_ms / 60
@@ -10,9 +9,6 @@ Date.daysBetween = function (delay_time_ms) {
   delay_time_ms = delay_time_ms / 60
   var hours = Math.floor(delay_time_ms % 24)
   var days = Math.floor(delay_time_ms / 24)
-
-  console.log(days)
-
   if (days === 0) {
     if (hours === 0) {
       if (minutes === 0) {
@@ -26,6 +22,5 @@ Date.daysBetween = function (delay_time_ms) {
   } else {
     text = days + ' days '
   }
-
   return text
 }
