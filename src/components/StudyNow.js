@@ -76,17 +76,14 @@ const StudyNow = () => {
           delay_time_ms: el[1].delay_time_ms,
         }))
         // Date-eer ni sortolj baina.
-        // data.sort(function (a, b) {
-        //   var dateA = new Date(a.delay_time),
-        //     dateB = new Date(b.delay_time)
-        //   return dateA - dateB
-        // })
-        console.log('Sain uu?')
-        console.log(data)
-        console.log(currentIndex)
-        console.log('URJUULSEN')
-
-        if (currentIndex === 0 && data[currentIndex].rate === 2) {
+        data.sort(function (a, b) {
+          var dateA = new Date(a.delay_time),
+            dateB = new Date(b.delay_time)
+          return dateA - dateB
+        })
+        //Redux-ruu firebase DB-ees avsan ogogdloo nemj bna.
+        dispatch(enterMultiple(data))
+        if (currentIndex === '0' && data[currentIndex].rate === '2') {
           if (Math.floor(data[currentIndex].delay_time_ms) > 1) {
             setDelayTimeButtonHardText(
               daysBetween(data[currentIndex].delay_time_ms / 2)
@@ -104,9 +101,6 @@ const StudyNow = () => {
           setDelayTimeButtonEasyText(
             daysBetween(data[currentIndex].delay_time_ms * 3)
           )
-
-          //Redux-ruu firebase DB-ees avsan ogogdloo nemj bna.
-          dispatch(enterMultiple(data))
         }
       })
       .catch(error => {
@@ -126,33 +120,6 @@ const StudyNow = () => {
     // console.log('Lenth' + items.length)
   }
 
-  // // 2 date-iin zoruug day, hour, minutes, second-eer ilerhiileh function
-  // Date.daysBetween = function (delay_time_ms) {
-  //   var text = ''
-  //   //take out milliseconds
-  //   delay_time_ms = delay_time_ms / 1000
-  //   var seconds = Math.floor(delay_time_ms % 60)
-  //   delay_time_ms = delay_time_ms / 60
-  //   var minutes = Math.floor(delay_time_ms % 60)
-  //   delay_time_ms = delay_time_ms / 60
-  //   var hours = Math.floor(delay_time_ms % 24)
-  //   var days = Math.floor(delay_time_ms / 24)
-  //   if (days === 0) {
-  //     if (hours === 0) {
-  //       if (minutes === 0) {
-  //         text = seconds + ' seconds'
-  //       } else {
-  //         text = minutes + ' minutes'
-  //       }
-  //     } else {
-  //       text = hours + ' hours '
-  //     }
-  //   } else {
-  //     text = days + ' days '
-  //   }
-  //   return text
-  // }
-
   const next = (buttonName, item, cardCategory) => {
     let pervios_delay_time_ms = items[currentIndex].delay_time_ms
     setIndex(currentIndex + 1)
@@ -161,41 +128,41 @@ const StudyNow = () => {
 
     let delay_time_ms
     //CardCategory is new
-    if (buttonName === 'again' && cardCategory === 0) {
+    if (buttonName === 'again' && cardCategory === '0') {
       today.setMinutes(today.getMinutes() + 1)
       delay_time_ms = 1 * 60 * 1000
-    } else if (buttonName === 'good' && cardCategory === 0) {
+    } else if (buttonName === 'good' && cardCategory === '0') {
       today.setMinutes(today.getMinutes() + 10)
       delay_time_ms = 10 * 60 * 1000
-    } else if (buttonName === 'easy' && cardCategory === 0) {
+    } else if (buttonName === 'easy' && cardCategory === '0') {
       today.setDate(today.getDate() + 4)
       delay_time_ms = 4 * 60 * 60 * 24 * 1000
-      cardCategory = 1
+      cardCategory = '1'
     }
     //CardCategory is learning
-    else if (buttonName === 'again' && cardCategory === 1) {
+    else if (buttonName === 'again' && cardCategory === '1') {
       today.setMinutes(today.getMinutes() + 1)
       delay_time_ms = 1 * 60 * 1000
-    } else if (buttonName === 'good' && cardCategory === 1) {
+    } else if (buttonName === 'good' && cardCategory === '1') {
       today.setDate(today.getDate() + 1)
       delay_time_ms = 1 * 60 * 60 * 24 * 1000
-      cardCategory = 2
-    } else if (buttonName === 'easy' && cardCategory === 1) {
+      cardCategory = '2'
+    } else if (buttonName === 'easy' && cardCategory === '1') {
       today.setDate(today.getDate() + 4)
       delay_time_ms = 4 * 60 * 60 * 24 * 1000
-      cardCategory = 2
+      cardCategory = '2'
     }
     //CardCategory is review
-    else if (buttonName === 'again' && cardCategory === 2) {
+    else if (buttonName === 'again' && cardCategory === '2') {
       today.setMinutes(today.getMinutes() + 10)
       delay_time_ms = 10 * 60 * 1000
-    } else if (buttonName === 'hard' && cardCategory === 2) {
+    } else if (buttonName === 'hard' && cardCategory === '2') {
       // Eniig daraa ni zasna
       today.setDate(today.getDate() + 2)
       delay_time_ms = 2 * 60 * 60 * 24 * 1000
-    } else if (buttonName === 'good' && cardCategory === 2) {
+    } else if (buttonName === 'good' && cardCategory === '2') {
       delay_time_ms = pervios_delay_time_ms * 2
-    } else if (buttonName === 'easy' && cardCategory === 2) {
+    } else if (buttonName === 'easy' && cardCategory === '2') {
       delay_time_ms = pervios_delay_time_ms * 3
     }
 
@@ -212,7 +179,7 @@ const StudyNow = () => {
     // console.log('Hello')
 
     // Daraagiin cardnii button deerh hugatsaanuudiin tootsoololuudiig gargaj irne. Hamgiin suuliin kart bol shaardlagagui.
-    if (currentIndex < items.length && items[currentIndex].rate === 2) {
+    if (currentIndex < items.length && items[currentIndex].rate === '2') {
       if (Math.floor(items[currentIndex].delay_time_ms) > 1) {
         delayTimeTextHard = daysBetween(items[currentIndex].delay_time_ms / 2)
       } else {

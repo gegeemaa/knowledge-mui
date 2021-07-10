@@ -66,7 +66,7 @@ const InputForm = ({ buttonText, value, handleCancel }) => {
   const [title, setTitle] = useState(value !== null ? value.title : '')
   // const [body, setBody] = useState(value !== null ? value.body : '')
   const [topic, setTopic] = useState(value !== null ? value.topic : '')
-  const [rate, setRate] = useState(value !== null ? value.rate : 0)
+  const [rate, setRate] = useState(value !== null ? value.rate : '0')
 
   const dispatch = useDispatch()
 

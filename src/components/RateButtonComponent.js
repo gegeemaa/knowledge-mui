@@ -24,9 +24,18 @@ const RateButtonComponent = ({
 }) => {
   console.log(cardCategory)
   const classes = useStyles()
+  let cartCategoryText
+  if (cardCategory === '0') {
+    cartCategoryText = <h3>New card</h3>
+  } else if (cardCategory === '1') {
+    cartCategoryText = <h3>Learning card</h3>
+  } else {
+    cartCategoryText = <h3>Reviewing card</h3>
+  }
   return (
     <div>
-      {cardCategory === 0 && (
+      {cartCategoryText}
+      {cardCategory === '0' && (
         <div>
           {' '}
           <div className={classes.button}>
@@ -59,7 +68,7 @@ const RateButtonComponent = ({
           </div>
         </div>
       )}
-      {cardCategory === 1 && (
+      {cardCategory === '1' && (
         <div>
           {' '}
           <div className={classes.button}>
@@ -91,7 +100,7 @@ const RateButtonComponent = ({
           </div>
         </div>
       )}
-      {cardCategory === 2 && (
+      {cardCategory === '2' && (
         <div>
           {' '}
           <div className={classes.button}>
