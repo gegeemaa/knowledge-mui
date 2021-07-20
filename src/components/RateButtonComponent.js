@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
+import clsx from 'clsx'
 
 const useStyles = makeStyles({
   delayTime: {
@@ -12,6 +13,17 @@ const useStyles = makeStyles({
     display: 'inline-block',
     marginRight: '12px',
   },
+  label: {
+    padding: '.2em .6em .3em',
+    color: 'white',
+    fontWeight: 'bold',
+    borderRadius: '15px',
+    fontSize: '85%',
+    lineHeight: '1',
+  },
+  warning: { backgroundColor: '#f0ad4e' },
+  info: { backgroundColor: '#5bc0de' },
+  success: { backgroundColor: '#04AA6D' },
 })
 
 const RateButtonComponent = ({
@@ -25,16 +37,30 @@ const RateButtonComponent = ({
   console.log(cardCategory)
   const classes = useStyles()
   let cartCategoryText
+  let labelWarning = false
+  let labelInfo = false
+  let labelSuccess = false
   if (cardCategory === '0') {
-    cartCategoryText = <h3>New card</h3>
+    cartCategoryText = 'New card'
+    labelWarning = true
   } else if (cardCategory === '1') {
-    cartCategoryText = <h3>Learning card</h3>
+    cartCategoryText = 'Learning card'
+    labelInfo = true
   } else {
-    cartCategoryText = <h3>Reviewing card</h3>
+    cartCategoryText = 'Reviewing card'
+    labelSuccess = true
   }
   return (
     <div>
-      {cartCategoryText}
+      <span
+        className={clsx(
+          classes.label,
+          labelWarning && classes.warning,
+          labelInfo && classes.info,
+          labelSuccess && classes.success
+        )}>
+        {cartCategoryText}
+      </span>
       {cardCategory === '0' && (
         <div>
           {' '}

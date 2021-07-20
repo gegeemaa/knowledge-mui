@@ -81,9 +81,9 @@ const StudyNow = () => {
             dateB = new Date(b.delay_time)
           return dateA - dateB
         })
-        //Redux-ruu firebase DB-ees avsan ogogdloo nemj bna.
-        dispatch(enterMultiple(data))
-        if (currentIndex === '0' && data[currentIndex].rate === '2') {
+        console.log(data)
+
+        if (currentIndex === 0 && data[currentIndex].rate === '2') {
           if (Math.floor(data[currentIndex].delay_time_ms) > 1) {
             setDelayTimeButtonHardText(
               daysBetween(data[currentIndex].delay_time_ms / 2)
@@ -102,6 +102,8 @@ const StudyNow = () => {
             daysBetween(data[currentIndex].delay_time_ms * 3)
           )
         }
+        //Redux-ruu firebase DB-ees avsan ogogdloo nemj bna.
+        dispatch(enterMultiple(data))
       })
       .catch(error => {
         // console.log(error)
@@ -225,6 +227,7 @@ const StudyNow = () => {
           {answerDisplay && (
             <div>
               <div id="body">{items[currentIndex].body}</div>
+              <br></br>
               <RateButtonComponent
                 item={items[currentIndex]}
                 cardCategory={items[currentIndex].rate}
