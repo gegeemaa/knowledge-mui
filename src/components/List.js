@@ -86,14 +86,18 @@ const List = () => {
           body: el[1].body,
           topic: el[1].topic,
           rate: el[1].rate,
+          // delay_time: new Date(el[1].delay_time),
           delay_time: el[1].delay_time,
         }))
 
         console.log('LISTees hevlej bna')
-        // const sortedData = data.slice().sort((a, b) => b.date - a.date)
+        // string-iig date-ryy horvuuleed sortloj bna.
+        const sortedData = data
+          .slice()
+          .sort((a, b) => new Date(a.delay_time) - new Date(b.delay_time))
         // sortedData
         //Redux-ruu firebase DB-ees avsan ogogdloo nemj bna.
-        dispatch(enterMultiple(data))
+        dispatch(enterMultiple(sortedData))
       })
       .catch(error => {
         // console.log(error)
@@ -218,7 +222,7 @@ const List = () => {
               <TableBody>
                 {rows.map(knowledge => (
                   <TableRow key={knowledge.id}>
-                    <TableCell>{knowledge.delay_time}</TableCell>
+                    <TableCell>{knowledge.delay_time.slice(0, 10)}</TableCell>
                     <TableCell>{knowledge.title}</TableCell>
                     <TableCell>{knowledge.topic}</TableCell>
 
