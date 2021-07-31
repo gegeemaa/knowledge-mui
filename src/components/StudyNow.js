@@ -64,17 +64,19 @@ const StudyNow = () => {
         const arr = Object.entries(response.data)
         // console.log(arr)
         // map() ni array-aas shine array uusgeh function yum.
-        data = arr.map(el => ({
-          id: el[0],
-          date: el[1].date,
-          title: el[1].title,
-          body: el[1].body,
-          topic: el[1].topic,
-          rate: el[1].rate,
-          severity: el[1].severity,
-          delay_time: el[1].delay_time,
-          delay_time_ms: el[1].delay_time_ms,
-        }))
+        data = arr
+          .map(el => ({
+            id: el[0],
+            date: el[1].date,
+            title: el[1].title,
+            body: el[1].body,
+            topic: el[1].topic,
+            rate: el[1].rate,
+            severity: el[1].severity,
+            delay_time: el[1].delay_time,
+            delay_time_ms: el[1].delay_time_ms,
+          }))
+          .filter(x => new Date() >= new Date(x.delay_time))
         // Date-eer ni sortolj baina.
         data.sort(function (a, b) {
           var dateA = new Date(a.delay_time),
@@ -82,7 +84,7 @@ const StudyNow = () => {
           return dateA - dateB
         })
         console.log(data)
-
+        //Hamgiin ehnii kartan deer garah button text-iig tootsoolj gargaj bna.
         if (currentIndex === 0 && data[currentIndex].rate === '2') {
           if (Math.floor(data[currentIndex].delay_time_ms) > 1) {
             setDelayTimeButtonHardText(
@@ -124,6 +126,7 @@ const StudyNow = () => {
 
   const next = (buttonName, item, cardCategory) => {
     let pervios_delay_time_ms = items[currentIndex].delay_time_ms
+    let nextCurrentIndex = currentIndex + 1
     setIndex(currentIndex + 1)
     setAnswerDisplay(false)
     // console.log(buttonName, cardCategory)
@@ -181,14 +184,31 @@ const StudyNow = () => {
     // console.log('Hello')
 
     // Daraagiin cardnii button deerh hugatsaanuudiin tootsoololuudiig gargaj irne. Hamgiin suuliin kart bol shaardlagagui.
-    if (currentIndex < items.length && items[currentIndex].rate === '2') {
-      if (Math.floor(items[currentIndex].delay_time_ms) > 1) {
-        delayTimeTextHard = daysBetween(items[currentIndex].delay_time_ms / 2)
+
+    console.log('DRADRA:')
+    console.log(currentIndex)
+    console.log(items.length)
+
+    // if (currentIndex < items.length) {
+    console.log('RATE:')
+    console.log(items[currentIndex].rate)
+    //
+    if (
+      nextCurrentIndex < items.length &&
+      items[nextCurrentIndex].rate === '2'
+    ) {
+      if (Math.floor(items[nextCurrentIndex].delay_time_ms) > 1) {
+        delayTimeTextHard = daysBetween(
+          items[nextCurrentIndex].delay_time_ms / 2
+        )
       } else {
         delayTimeTextHard = '1 day'
       }
-      delayTimeTextGood = daysBetween(items[currentIndex].delay_time_ms * 2)
-      delayTimeTextEasy = daysBetween(items[currentIndex].delay_time_ms * 3)
+      delayTimeTextGood = daysBetween(items[nextCurrentIndex].delay_time_ms * 2)
+      delayTimeTextEasy = daysBetween(items[nextCurrentIndex].delay_time_ms * 3)
+
+      console.log('SUNSHINE1')
+
       setDelayTimeButtonHardText(delayTimeTextHard)
       setDelayTimeButtonGoodText(delayTimeTextGood)
       setDelayTimeButtonEasyText(delayTimeTextEasy)

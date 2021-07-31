@@ -34,7 +34,7 @@ const RateButtonComponent = ({
   delayTimeButtonGoodText,
   delayTimeButtonEasyText,
 }) => {
-  console.log(cardCategory)
+  // console.log(cardCategory)
   const classes = useStyles()
   let cartCategoryText
   let labelWarning = false
