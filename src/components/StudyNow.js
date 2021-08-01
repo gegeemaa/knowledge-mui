@@ -2,9 +2,7 @@ import { React, useState, useEffect } from 'react'
 import clsx from 'clsx'
 import { useSelector, useDispatch } from 'react-redux'
 import axios from '../axios-knowledges'
-import RateButtonComponent from './RateButtonComponent'
 import { Paper, Button } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
 import {
   enterMultiple,
   // deleteRow,
@@ -12,25 +10,12 @@ import {
 } from '../redux/actions/knowledgeActions'
 import { Block, ContactsOutlined, RowingSharp } from '@material-ui/icons'
 import { GridLeftEmptyCell } from '@material-ui/data-grid'
-import { daysBetween } from '../functions/functions'
-
-const useStyles = makeStyles({
-  paper: {
-    padding: '15px',
-    display: 'flex',
-    overflow: 'auto',
-    flexDirection: 'column',
-  },
-  buttonRate: {
-    display: 'none',
-  },
-  buttonBlock: {
-    display: 'block',
-  },
-  fontBold: {
-    fontWeight: '900',
-  },
-})
+import { daysBetween } from '../functions/daysBewteen'
+import NewCardButtons from './category/NewCardButtons'
+import LearningCardButtons from './category/LearningCardButtons'
+import ReviewCardButtons from './category/ReviewCardButtons'
+import useStyles from '../styles/styles'
+// import {next} from '../functions/functions'
 
 const StudyNow = () => {
   const dispatch = useDispatch()
@@ -52,6 +37,11 @@ const StudyNow = () => {
   let today = new Date()
 
   let data = []
+
+  const [cartCategoryText, setCartCategoryText] = useState('')
+  const [labelWarning, setLabelWarning] = useState(false)
+  const [labelInfo, setLabelInfo] = useState(false)
+  const [labelSuccess, setLabelSuccess] = useState(false)
 
   // eniig daraa ni tusdaa component bolgoh
   useEffect(() => {
@@ -122,10 +112,20 @@ const StudyNow = () => {
   const showAnswer = argument => {
     setAnswerDisplay(true)
     // console.log('Lenth' + items.length)
+    if (items[currentIndex].rate === '0') {
+      setCartCategoryText('New card')
+      setLabelWarning(true)
+    } else if (items[currentIndex].rate === '1') {
+      setCartCategoryText('Learning card')
+      setLabelInfo(true)
+    } else {
+      setCartCategoryText('Reviewing card')
+      setLabelSuccess(true)
+    }
+    console.log('cartCategoryText: ', cartCategoryText)
   }
-
   const next = (buttonName, item, cardCategory) => {
-    let pervios_delay_time_ms = items[currentIndex].delay_time_ms
+    let pervios_delay_time_ms = item.delay_time_ms
     let nextCurrentIndex = currentIndex + 1
     setIndex(currentIndex + 1)
     setAnswerDisplay(false)
@@ -248,15 +248,40 @@ const StudyNow = () => {
             <div>
               <div id="body">{items[currentIndex].body}</div>
               <br></br>
-              <RateButtonComponent
-                item={items[currentIndex]}
-                cardCategory={items[currentIndex].rate}
-                severity={items[currentIndex].severity}
-                delayTimeButtonHardText={delayTimeButtonHardText}
-                delayTimeButtonGoodText={delayTimeButtonGoodText}
-                delayTimeButtonEasyText={delayTimeButtonEasyText}
-                onClick={next}
-              />
+              <span
+                className={clsx(
+                  classes.label,
+                  labelWarning && classes.warning,
+                  labelInfo && classes.info,
+                  labelSuccess && classes.success
+                )}>
+                {cartCategoryText}
+              </span>
+
+              {items[currentIndex].rate === '0' && (
+                <NewCardButtons
+                  item={items[currentIndex]}
+                  cardCategory={items[currentIndex].rate}
+                  onClick={next}
+                />
+              )}
+              {items[currentIndex].rate === '1' && (
+                <LearningCardButtons
+                  item={items[currentIndex]}
+                  cardCategory={items[currentIndex].rate}
+                  onClick={next}
+                />
+              )}
+              {items[currentIndex].rate === '2' && (
+                <ReviewCardButtons
+                  item={items[currentIndex]}
+                  cardCategory={items[currentIndex].rate}
+                  delayTimeButtonHardText={delayTimeButtonHardText}
+                  delayTimeButtonGoodText={delayTimeButtonGoodText}
+                  delayTimeButtonEasyText={delayTimeButtonEasyText}
+                  onClick={next}
+                />
+              )}
             </div>
           )}
         </div>
