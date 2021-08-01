@@ -3,7 +3,6 @@ import { Button } from '@material-ui/core'
 import useStyles from '../../styles/styles'
 
 export default function ReviewCardButtons({
-  item,
   cardCategory,
   onClick,
   delayTimeButtonHardText,
@@ -19,7 +18,7 @@ export default function ReviewCardButtons({
         <Button
           variant="outlined"
           color="secondary"
-          onClick={() => onClick('again', item, cardCategory)}>
+          onClick={() => onClick('again', cardCategory)}>
           Again
         </Button>
       </div>
@@ -28,7 +27,7 @@ export default function ReviewCardButtons({
         <Button
           variant="outlined"
           color="primary"
-          onClick={() => onClick('hard', item, cardCategory)}>
+          onClick={() => onClick('hard', cardCategory)}>
           Hard
         </Button>
       </div>
@@ -37,7 +36,7 @@ export default function ReviewCardButtons({
         <Button
           variant="outlined"
           color="primary"
-          onClick={() => onClick('good', item, cardCategory)}>
+          onClick={() => onClick('good', cardCategory)}>
           Good
         </Button>
       </div>
@@ -46,7 +45,7 @@ export default function ReviewCardButtons({
         <Button
           variant="outlined"
           color="primary"
-          onClick={() => onClick('easy', item, cardCategory)}>
+          onClick={() => onClick('easy', cardCategory)}>
           Easy
         </Button>
       </div>
