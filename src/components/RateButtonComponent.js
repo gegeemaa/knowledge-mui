@@ -2,29 +2,10 @@ import React from 'react'
 import { Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import clsx from 'clsx'
-
-const useStyles = makeStyles({
-  delayTime: {
-    fontSize: '14px',
-    marginBottom: '2px',
-    display: 'block',
-  },
-  button: {
-    display: 'inline-block',
-    marginRight: '12px',
-  },
-  label: {
-    padding: '.2em .6em .3em',
-    color: 'white',
-    fontWeight: 'bold',
-    borderRadius: '15px',
-    fontSize: '85%',
-    lineHeight: '1',
-  },
-  warning: { backgroundColor: '#f0ad4e' },
-  info: { backgroundColor: '#5bc0de' },
-  success: { backgroundColor: '#04AA6D' },
-})
+import NewCardButtons from './category/NewCardButtons'
+import LearningCardButtons from './category/LearningCardButtons'
+import ReviewCardButtons from './category/ReviewCardButtons'
+import useStyles from '../styles/styles'
 
 const RateButtonComponent = ({
   item,
@@ -50,6 +31,8 @@ const RateButtonComponent = ({
     cartCategoryText = 'Reviewing card'
     labelSuccess = true
   }
+  console.log('onClick:')
+  console.log(onClick)
   return (
     <div>
       <span
@@ -62,110 +45,28 @@ const RateButtonComponent = ({
         {cartCategoryText}
       </span>
       {cardCategory === '0' && (
-        <div>
-          {' '}
-          <div className={classes.button}>
-            <p className={classes.delayTime}> 1 minute </p>
-            <Button
-              variant="outlined"
-              color="secondary"
-              onClick={() => onClick('again', item, cardCategory)}
-              className="button">
-              Again
-            </Button>
-          </div>
-          <div className={classes.button}>
-            <p className={classes.delayTime}> 10 minutes </p>
-            <Button
-              variant="outlined"
-              color="primary"
-              onClick={() => onClick('good', item, cardCategory)}>
-              Good
-            </Button>
-          </div>
-          <div className={classes.button}>
-            <p className={classes.delayTime}>4 days</p>
-            <Button
-              variant="outlined"
-              color="primary"
-              onClick={() => onClick('easy', item, cardCategory)}>
-              Easy
-            </Button>
-          </div>
-        </div>
+        <NewCardButtons
+          item={item}
+          cardCategory={cardCategory}
+          onClick={onClick}
+        />
       )}
       {cardCategory === '1' && (
-        <div>
-          {' '}
-          <div className={classes.button}>
-            <p className={classes.delayTime}>1 minute</p>
-            <Button
-              variant="outlined"
-              color="secondary"
-              onClick={() => onClick('again', item, cardCategory)}>
-              Again
-            </Button>
-          </div>
-          <div className={classes.button}>
-            <p className={classes.delayTime}> 1 day </p>
-            <Button
-              variant="outlined"
-              color="primary"
-              onClick={() => onClick('good', item, cardCategory)}>
-              Good
-            </Button>
-          </div>
-          <div className={classes.button}>
-            <p className={classes.delayTime}> 4 days </p>
-            <Button
-              variant="outlined"
-              color="primary"
-              onClick={() => onClick('easy', item, cardCategory)}>
-              Easy
-            </Button>
-          </div>
-        </div>
+        <LearningCardButtons
+          item={item}
+          cardCategory={cardCategory}
+          onClick={onClick}
+        />
       )}
       {cardCategory === '2' && (
-        <div>
-          {' '}
-          <div className={classes.button}>
-            <p className={classes.delayTime}>10 minutes</p>
-            <Button
-              variant="outlined"
-              color="secondary"
-              onClick={() => onClick('again', item, cardCategory)}>
-              Again
-            </Button>
-          </div>
-          <div className={classes.button}>
-            <p className={classes.delayTime}>{delayTimeButtonHardText}</p>
-            <Button
-              variant="outlined"
-              color="primary"
-              onClick={() => onClick('hard', item, cardCategory)}>
-              Hard
-            </Button>
-          </div>
-          <div className={classes.button}>
-            <p className={classes.delayTime}>{delayTimeButtonGoodText}</p>
-            <Button
-              variant="outlined"
-              color="primary"
-              onClick={() => onClick('good', item, cardCategory)}>
-              Good
-            </Button>
-          </div>
-          <div className={classes.button}>
-            <p className={classes.delayTime}>{delayTimeButtonEasyText}</p>
-            <Button
-              variant="outlined"
-              color="primary"
-              onClick={() => onClick('easy', item, cardCategory)}>
-              Easy
-            </Button>
-          </div>
-        </div>
+        <ReviewCardButtons
+          item={item}
+          cardCategory={cardCategory}
+          onClick={onClick}
+          delayTimeButtonHardText={delayTimeButtonHardText}
+          delayTimeButtonGoodText={delayTimeButtonGoodText}
+          delayTimeButtonEasyText={delayTimeButtonEasyText}
+        />
       )}
     </div>
   )
