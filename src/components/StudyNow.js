@@ -15,7 +15,7 @@ import NewCardButtons from './category/NewCardButtons'
 import LearningCardButtons from './category/LearningCardButtons'
 import ReviewCardButtons from './category/ReviewCardButtons'
 import useStyles from '../styles/styles'
-// import {next} from '../functions/functions'
+// import { next } from '../functions/functions'
 
 const StudyNow = () => {
   const dispatch = useDispatch()
@@ -122,11 +122,30 @@ const StudyNow = () => {
       setCartCategoryText('Reviewing card')
       setLabelSuccess(true)
     }
+
+    // Cardnii button deerh hugatsaanuudiin tootsoololuudiig gargaj irne.
+    // Hamgiin suuliin kart bol shaardlagagui.
+
+    console.log('showAnswer:', currentIndex)
+    //
+    if (currentIndex < items.length && items[currentIndex].rate === '2') {
+      if (Math.floor(items[currentIndex].delay_time_ms) > 1) {
+        delayTimeTextHard = daysBetween(items[currentIndex].delay_time_ms / 2)
+      } else {
+        delayTimeTextHard = '1 day'
+      }
+      delayTimeTextGood = daysBetween(items[currentIndex].delay_time_ms * 2)
+      delayTimeTextEasy = daysBetween(items[currentIndex].delay_time_ms * 3)
+
+      setDelayTimeButtonHardText(delayTimeTextHard)
+      setDelayTimeButtonGoodText(delayTimeTextGood)
+      setDelayTimeButtonEasyText(delayTimeTextEasy)
+    }
     console.log('cartCategoryText: ', cartCategoryText)
   }
-  const next = (buttonName, item, cardCategory) => {
+
+  const next = (buttonName, cardCategory, item) => {
     let pervios_delay_time_ms = item.delay_time_ms
-    let nextCurrentIndex = currentIndex + 1
     setIndex(currentIndex + 1)
     setAnswerDisplay(false)
     // console.log(buttonName, cardCategory)
@@ -182,37 +201,6 @@ const StudyNow = () => {
       })
       .then(response => {})
     // console.log('Hello')
-
-    // Daraagiin cardnii button deerh hugatsaanuudiin tootsoololuudiig gargaj irne. Hamgiin suuliin kart bol shaardlagagui.
-
-    console.log('DRADRA:')
-    console.log(currentIndex)
-    console.log(items.length)
-
-    // if (currentIndex < items.length) {
-    console.log('RATE:')
-    console.log(items[currentIndex].rate)
-    //
-    if (
-      nextCurrentIndex < items.length &&
-      items[nextCurrentIndex].rate === '2'
-    ) {
-      if (Math.floor(items[nextCurrentIndex].delay_time_ms) > 1) {
-        delayTimeTextHard = daysBetween(
-          items[nextCurrentIndex].delay_time_ms / 2
-        )
-      } else {
-        delayTimeTextHard = '1 day'
-      }
-      delayTimeTextGood = daysBetween(items[nextCurrentIndex].delay_time_ms * 2)
-      delayTimeTextEasy = daysBetween(items[nextCurrentIndex].delay_time_ms * 3)
-
-      console.log('SUNSHINE1')
-
-      setDelayTimeButtonHardText(delayTimeTextHard)
-      setDelayTimeButtonGoodText(delayTimeTextGood)
-      setDelayTimeButtonEasyText(delayTimeTextEasy)
-    }
   }
 
   if (items.length === 0) {
@@ -260,21 +248,18 @@ const StudyNow = () => {
 
               {items[currentIndex].rate === '0' && (
                 <NewCardButtons
-                  item={items[currentIndex]}
                   cardCategory={items[currentIndex].rate}
                   onClick={next}
                 />
               )}
               {items[currentIndex].rate === '1' && (
                 <LearningCardButtons
-                  item={items[currentIndex]}
                   cardCategory={items[currentIndex].rate}
                   onClick={next}
                 />
               )}
               {items[currentIndex].rate === '2' && (
                 <ReviewCardButtons
-                  item={items[currentIndex]}
                   cardCategory={items[currentIndex].rate}
                   delayTimeButtonHardText={delayTimeButtonHardText}
                   delayTimeButtonGoodText={delayTimeButtonGoodText}
