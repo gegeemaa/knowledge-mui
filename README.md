@@ -1,11 +1,24 @@
-# Knowledge system
+# Flush card or note system
 
-- Register and manage knowledge
-- Memorize knowledge by showing like flush cards and specific time intervial 
-
+This system is to register, manage flush cards or note and memorize them under specific time interval.
+It is inspired by Anki.
 
 ## Libraries
 
 - ReacJS 
 - MatrialUI
 - React Redux
+
+## Installation and Setup Instructions
+
+Installation:
+
+npm install
+
+To Start Server:
+
+npm start
+
+To Visit App:
+
+localhost:3000
