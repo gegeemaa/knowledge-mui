@@ -144,8 +144,8 @@ const StudyNow = () => {
     console.log('cartCategoryText: ', cartCategoryText)
   }
 
-  const next = (buttonName, cardCategory, item) => {
-    let pervios_delay_time_ms = item.delay_time_ms
+  const next = (buttonName, cardCategory) => {
+    let pervios_delay_time_ms = items[currentIndex].delay_time_ms
     setIndex(currentIndex + 1)
     setAnswerDisplay(false)
     // console.log(buttonName, cardCategory)
@@ -193,8 +193,8 @@ const StudyNow = () => {
     setDelayTime(today.toISOString().slice(0, 19))
     // // send data to Firebase database
     axios
-      .put('/knowledges/' + item.id + '.json', {
-        ...item,
+      .put('/knowledges/' + items[currentIndex].id + '.json', {
+        ...items[currentIndex],
         delay_time: today.toISOString().slice(0, 19),
         delay_time_ms: delay_time_ms,
         rate: cardCategory,
