@@ -272,7 +272,8 @@ const List = () => {
               <div>
                 <h3>{value.date}</h3>
                 <h3>{value.title}</h3>
-                <Editor value={value.body} readOnly={true} />
+                {value.body}
+                <Editor defaultValue={value.body} readOnly={true} />
                 <Alert severity={severity}>{severityMessege}</Alert>
               </div>
             ) : (
