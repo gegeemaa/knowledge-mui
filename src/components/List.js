@@ -12,6 +12,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TablePagination,
   TableContainer,
   TableHead,
   TableRow,
@@ -36,7 +37,7 @@ import { TrendingUpOutlined } from '@material-ui/icons'
 
 const useStyles = makeStyles({
   table: {
-    minWidth: 650,
+    minWidth: 400,
   },
   paper: {
     padding: '15px',
@@ -46,6 +47,12 @@ const useStyles = makeStyles({
   },
   AddIcon: {
     color: '#3f51b5',
+  },
+  icon: {
+    fontSize: '20px',
+  },
+  tableTitle: {
+    fontWeight: 'bold',
   },
 })
 
@@ -207,16 +214,20 @@ const List = () => {
         </RadioGroup>
       </FormControl>
       <Grid container spacing={3}>
-        <Grid item xs={6}>
+        <Grid item xs={5}>
           <TableContainer component={Paper}>
             <Table className={classes.table} aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell>Study date</TableCell>
-                  <TableCell>Title</TableCell>
-                  <TableCell>Topic</TableCell>
-                  <TableCell>Created date</TableCell>
-                  <TableCell align="right">Action</TableCell>
+                  <TableCell className={classes.tableTitle}>
+                    Study date
+                  </TableCell>
+                  <TableCell className={classes.tableTitle}>Title</TableCell>
+                  <TableCell className={classes.tableTitle}>Topic</TableCell>
+                  {/* <TableCell>Created date</TableCell> */}
+                  <TableCell className={classes.tableTitle} align="right">
+                    Action
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -226,18 +237,27 @@ const List = () => {
                     <TableCell>{knowledge.title}</TableCell>
                     <TableCell>{knowledge.topic}</TableCell>
 
-                    <TableCell component="th" scope="row">
+                    {/* <TableCell component="th" scope="row">
                       {knowledge.date}
-                    </TableCell>
+                    </TableCell> */}
                     <TableCell align="right">
                       <a onClick={() => seeItem(knowledge)}>
-                        <VisibilityIcon />
+                        <VisibilityIcon
+                          className={classes.icon}
+                          style={{ color: '#1976d2' }}
+                        />
                       </a>
                       <a onClick={() => openItem(knowledge)}>
-                        <EditIcon />
+                        <EditIcon
+                          className={classes.icon}
+                          style={{ color: '#4caf50' }}
+                        />
                       </a>
                       <a onClick={() => deleteItem(knowledge.id)}>
-                        <DeleteIcon />
+                        <DeleteIcon
+                          className={classes.icon}
+                          style={{ color: 'rgb(220, 0, 78)' }}
+                        />
                       </a>
                     </TableCell>
                   </TableRow>
@@ -246,13 +266,13 @@ const List = () => {
             </Table>
           </TableContainer>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={7}>
           <Paper className={classes.paper}>
             {value !== null ? (
               <div>
                 <h3>{value.date}</h3>
                 <h3>{value.title}</h3>
-                <Editor defaultValue={value.body} readOnly={true} />
+                <Editor value={value.body} readOnly={true} />
                 <Alert severity={severity}>{severityMessege}</Alert>
               </div>
             ) : (

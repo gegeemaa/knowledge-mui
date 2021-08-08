@@ -8,6 +8,9 @@ export const updateFunction = (
   body,
   topic,
   rate,
+  delay_time,
+  delay_time_ms,
+  user_id,
   dispatch
 ) => {
   if (date !== '' && title !== '') {
@@ -18,6 +21,9 @@ export const updateFunction = (
       body,
       topic,
       rate,
+      delay_time,
+      delay_time_ms,
+      user_id,
     }
     dispatch(updateRow(knowledge))
     // // send data to Firebase database

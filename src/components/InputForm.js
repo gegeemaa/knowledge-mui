@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react'
+import clsx from 'clsx'
 import { useDispatch } from 'react-redux'
 import Editor from 'rich-markdown-editor'
 import styled from 'styled-components'
@@ -33,29 +34,10 @@ const useStyles = makeStyles(theme => ({
     minWidth: 120,
     margin: theme.spacing(1),
   },
+  textEditor: {
+    minHeight: 200,
+  },
 }))
-
-const exampleText = `
-# Hello Advocate Pod
-
-## H2
-
-### H3
-
-#### H4
-
-This is a markdown paragraph.
-
-- unordered lists
-- lists
-[this is a link](google.com)
-1. numbered
-2. lists
-
-`
-let bodyText = `
-
-`
 
 const InputForm = ({ buttonText, value, handleCancel }) => {
   console.log('value' + value)
@@ -64,9 +46,12 @@ const InputForm = ({ buttonText, value, handleCancel }) => {
   const todayString = today.toISOString().slice(0, 10)
   const [date, setDate] = useState(value !== null ? value.date : todayString)
   const [title, setTitle] = useState(value !== null ? value.title : '')
-  // const [body, setBody] = useState(value !== null ? value.body : '')
+  const [body, setBody] = useState(value !== null ? value.body : '')
   const [topic, setTopic] = useState(value !== null ? value.topic : '')
   const [rate, setRate] = useState(value !== null ? value.rate : '0')
+  let delay_time = value !== null ? value.delay_time : ''
+  let delay_time_ms = value !== null ? value.delay_time_ms : '0'
+  let user_id = value !== null ? value.user_id : ''
 
   const dispatch = useDispatch()
 
@@ -89,9 +74,20 @@ const InputForm = ({ buttonText, value, handleCancel }) => {
   const onFinish = () => {
     // updateFunction function-iin parameter-eer form-iin valuenuudaas gadna id-g nemj yavuulj bna.
     if (id !== null) {
-      updateFunction(id, date, title, bodyText, topic, rate, dispatch)
+      updateFunction(
+        id,
+        date,
+        title,
+        body,
+        topic,
+        rate,
+        delay_time,
+        delay_time_ms,
+        user_id,
+        dispatch
+      )
     } else {
-      addFunction(id, date, title, bodyText, topic, rate, dispatch)
+      addFunction(id, date, title, body, topic, rate, dispatch)
     }
     handleCancel()
   }
@@ -105,7 +101,7 @@ const InputForm = ({ buttonText, value, handleCancel }) => {
             variant="inline"
             format="yyyy-MM-dd"
             id="date"
-            name="Date"
+            name="Created date"
             label="Date"
             value={date}
             onChange={changeDate}
@@ -127,7 +123,10 @@ const InputForm = ({ buttonText, value, handleCancel }) => {
           variant="outlined"
         />
       </FormControl>
-      <FormControl fullWidth variant="outlined" className={classes.formControl}>
+      <FormControl
+        fullWidth
+        variant="outlined"
+        className={clsx(classes.formControl, classes.textEditor)}>
         <Editor
           readOnly={false}
           placeholder="
@@ -136,30 +135,17 @@ const InputForm = ({ buttonText, value, handleCancel }) => {
             console.log('click')
           }}
           onChange={value => {
-            bodyText = value()
-            console.log(bodyText)
+            setBody(value())
           }}
+          defaultValue={body}
         />
       </FormControl>
-      {/* <FormControl fullWidth className={classes.formControl}>
-        <TextField
-          id="body"
-          name="Body"
-          label="Body"
-          onChange={change}
-          multiline
-          rows={4}
-          defaultValue={body}
-          variant="outlined"
-        />
-      </FormControl> */}
-
       <FormControl variant="outlined" className={classes.formControl}>
         <InputLabel id="demo-simple-select-filled-label">Topic</InputLabel>
         <Select name="Topic" value={topic} onChange={change} label="Topic">
+          <MenuItem value="Coding">Coding</MenuItem>
           <MenuItem value="React">React</MenuItem>
-          <MenuItem value="Exercise">Exercise</MenuItem>
-          <MenuItem value="Meditation">Meditation</MenuItem>
+          <MenuItem value="Swedish">Swedish</MenuItem>
         </Select>
       </FormControl>
       <FormControl variant="outlined" className={classes.formControl}>
