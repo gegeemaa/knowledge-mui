@@ -20,5 +20,6 @@ export const addFunction = (id, date, title, body, topic, rate, dispatch) => {
     axios.post('/knowledges.json', knowledge).then(response => {
       dispatch(updateID({ ...knowledge, id: response.data.name }))
     })
+    alert('Note is added successfully!')
   }
 }

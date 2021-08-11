@@ -44,6 +44,7 @@ const InputForm = ({ buttonText, value, handleCancel }) => {
   const id = value !== null ? value.id : null
   const today = new Date()
   const todayString = today.toISOString().slice(0, 10)
+  const [key, setKey] = useState(0)
   const [date, setDate] = useState(value !== null ? value.date : todayString)
   const [title, setTitle] = useState(value !== null ? value.title : '')
   const [body, setBody] = useState(value !== null ? value.body : '')
@@ -88,8 +89,14 @@ const InputForm = ({ buttonText, value, handleCancel }) => {
       )
     } else {
       addFunction(id, date, title, body, topic, rate, dispatch)
+      setTitle('')
+      setBody('')
+      setTopic('')
+      setKey(v => v + 1)
     }
-    handleCancel()
+    if (handleCancel !== 'inVisible') {
+      handleCancel()
+    }
   }
 
   return (
@@ -118,7 +125,7 @@ const InputForm = ({ buttonText, value, handleCancel }) => {
           label="Title"
           id="title"
           name="Title"
-          defaultValue={title}
+          value={title}
           onChange={change}
           variant="outlined"
         />
@@ -128,6 +135,7 @@ const InputForm = ({ buttonText, value, handleCancel }) => {
         variant="outlined"
         className={clsx(classes.formControl, classes.textEditor)}>
         <Editor
+          key={key}
           readOnly={false}
           placeholder="
           Here is Mark Down Editor. Write BODY here..."
@@ -169,9 +177,11 @@ const InputForm = ({ buttonText, value, handleCancel }) => {
         <Button onClick={onFinish} color="primary">
           {buttonText}
         </Button>
-        <Button onClick={handleCancel} color="primary">
-          Cancel
-        </Button>
+        {handleCancel !== 'inVisible' && (
+          <Button onClick={handleCancel} color="primary">
+            Cancel
+          </Button>
+        )}
       </div>
     </form>
   )

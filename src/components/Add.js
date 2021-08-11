@@ -15,7 +15,7 @@ export default function Add() {
   const classes = useStyles()
   return (
     <Paper className={classes.paper}>
-      <InputForm value={null} buttonText="Add" handleCancel={false} />
+      <InputForm value={null} buttonText="Add" handleCancel="inVisible" />
     </Paper>
   )
 }
