@@ -27,6 +27,7 @@ import InfoStudyCard from './InfoStudyCard'
 import WbIncandescentIcon from '@material-ui/icons/WbIncandescent'
 import HomeIcon from '@material-ui/icons/Home'
 import Add from './Add'
+import Home from './Home'
 
 const drawerWidth = 240
 
@@ -195,7 +196,8 @@ export default function App() {
           })}>
           <div className={classes.drawerHeader} />
           <Switch>
-            <Route exact path="/" component={ListKnowledges} />
+            <Route exact path="/" component={Home} />
+            <Route path="/home" component={Home} />
             <Route path="/add" component={Add} />
             <Route path="/list" component={ListKnowledges} />
             <Route path="/InfoStudyCard" component={InfoStudyCard} />
