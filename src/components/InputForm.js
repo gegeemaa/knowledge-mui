@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import clsx from 'clsx'
 import { useDispatch } from 'react-redux'
-import Editor from 'rich-markdown-editor'
+import Editor, { theme } from 'rich-markdown-editor'
 import styled from 'styled-components'
 import {
   TextField,
@@ -146,6 +146,9 @@ const InputForm = ({ buttonText, value, handleCancel }) => {
             setBody(value())
           }}
           defaultValue={body}
+          // theme={{
+          //   light: theme.light,
+          // }}
         />
       </FormControl>
       <FormControl variant="outlined" className={classes.formControl}>

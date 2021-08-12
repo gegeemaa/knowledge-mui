@@ -184,7 +184,7 @@ export default function App() {
           <List>
             <ListItemLink
               to="/InfoStudyCard"
-              primary="Play notes"
+              primary="Work on notes"
               icon={<WbIncandescentIcon />}
             />
           </List>
