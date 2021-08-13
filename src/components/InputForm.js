@@ -108,8 +108,8 @@ const InputForm = ({ buttonText, value, handleCancel }) => {
             variant="inline"
             format="yyyy-MM-dd"
             id="date"
-            name="Created date"
-            label="Date"
+            name="date"
+            label="Created date"
             value={date}
             onChange={changeDate}
             KeyboardButtonProps={{
@@ -162,12 +162,14 @@ const InputForm = ({ buttonText, value, handleCancel }) => {
       <FormControl variant="outlined" className={classes.formControl}>
         <InputLabel id="demo-simple-select-filled-label">Rate</InputLabel>
         <Select name="Rate" value={rate} onChange={change} label="Rate">
-          <MenuItem value="0">New</MenuItem>
-          <MenuItem value="1" disabled={value == null}>
-            Good
+          <MenuItem value="0" disabled>
+            New
           </MenuItem>
-          <MenuItem value="2" disabled={value == null}>
-            Bad
+          <MenuItem value="1" disabled>
+            Learning
+          </MenuItem>
+          <MenuItem value="2" disabled>
+            Reviewing
           </MenuItem>
           {/* {MenuItemEgen} */}
         </Select>

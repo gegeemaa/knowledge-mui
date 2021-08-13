@@ -14,7 +14,7 @@ const Modal = ({ open, handleCancel, value, buttonText }) => {
       open={open}
       onClose={handleCancel}
       aria-labelledby="form-dialog-title">
-      <DialogTitle id="form-dialog-title">Add knowledge</DialogTitle>
+      <DialogTitle id="form-dialog-title">{buttonText} knowledge</DialogTitle>
       <DialogContent>
         <InputForm
           value={value}

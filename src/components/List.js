@@ -87,7 +87,6 @@ const List = () => {
   const [labelInfo, setLabelInfo] = useState(false)
   const [labelSuccess, setLabelSuccess] = useState(false)
 
-  // const [buttonText, setButtonText] = useState('Update')
   let data = []
   var period = 1
   const FILTER_MAP = {
@@ -310,6 +309,7 @@ const List = () => {
             {value !== null ? (
               <div>
                 <h3>Study date: {value.delay_time.slice(0, 10)}</h3>
+                <h3>Topic: {value.topic} </h3>
                 <h3>{value.title}</h3>
                 <p>
                   <span
