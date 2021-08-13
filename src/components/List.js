@@ -17,6 +17,7 @@ import {
   TableHead,
   TableRow,
   Paper,
+  Button,
 } from '@material-ui/core'
 import {
   enterMultiple,
@@ -53,6 +54,9 @@ const useStyles = makeStyles({
   },
   tableTitle: {
     fontWeight: 'bold',
+  },
+  radio: {
+    display: 'inline',
   },
 })
 
@@ -194,17 +198,24 @@ const List = () => {
 
   return (
     <div>
-      <a onClick={() => openItem(null)}>
-        <AddIcon className={classes.AddIcon} fontSize="large" />
-      </a>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => openItem(null)}>
+        <AddIcon fontSize="small" /> Add note
+      </Button>
       &nbsp; &nbsp;
       <FormControl component="fieldset">
+        <FormLabel component="legend" className={classes.radio}>
+          Filter by created date:
+        </FormLabel>
         <RadioGroup
           row
           aria-label="All"
           name="gender1"
           value={filter}
-          onChange={handleChange}>
+          onChange={handleChange}
+          className={classes.radio}>
           <FormControlLabel value="All" control={<Radio />} label="All" />
           <FormControlLabel value="0" control={<Radio />} label="Today" />
           <FormControlLabel value="1" control={<Radio />} label="1 day" />
@@ -213,6 +224,7 @@ const List = () => {
           <FormControlLabel value="30" control={<Radio />} label="30 days" />
         </RadioGroup>
       </FormControl>
+      <br />
       <Grid container spacing={3}>
         <Grid item xs={5}>
           <TableContainer component={Paper}>
