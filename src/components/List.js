@@ -52,6 +52,7 @@ const useStyles = makeStyles({
   },
   icon: {
     fontSize: '20px',
+    display: 'inline',
   },
   tableTitle: {
     fontWeight: 'bold',
@@ -327,7 +328,9 @@ const List = () => {
                 <Editor value={value.body} readOnly={true} />
               </div>
             ) : (
-              ''
+              <Alert severity="info">
+                Select related note from the list by clicking on "See" button!
+              </Alert>
             )}
           </Paper>
         </Grid>
