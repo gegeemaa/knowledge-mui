@@ -246,7 +246,7 @@ const List = () => {
                 {rows.map(knowledge => (
                   <TableRow key={knowledge.id}>
                     <TableCell>{knowledge.delay_time.slice(0, 10)}</TableCell>
-                    <TableCell>{knowledge.title}</TableCell>
+                    <TableCell size="small">{knowledge.title}</TableCell>
                     <TableCell>{knowledge.topic}</TableCell>
 
                     {/* <TableCell component="th" scope="row">
@@ -258,13 +258,15 @@ const List = () => {
                           className={classes.icon}
                           style={{ color: '#1976d2' }}
                         />
-                      </a>
+                      </a>{' '}
+                      &nbsp;
                       <a onClick={() => openItem(knowledge)}>
                         <EditIcon
                           className={classes.icon}
                           style={{ color: '#4caf50' }}
                         />
                       </a>
+                      &nbsp;
                       <a onClick={() => deleteItem(knowledge.id)}>
                         <DeleteIcon
                           className={classes.icon}
@@ -282,10 +284,10 @@ const List = () => {
           <Paper className={classes.paper}>
             {value !== null ? (
               <div>
-                <h3>{value.date}</h3>
+                <h3>{value.delay_time.slice(0, 10)}</h3>
                 <h3>{value.title}</h3>
-                {value.body}
-                <Editor defaultValue={value.body} readOnly={true} />
+                {/* {value.body} */}
+                <Editor value={value.body} readOnly={true} />
                 <Alert severity={severity}>{severityMessege}</Alert>
               </div>
             ) : (
