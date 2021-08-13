@@ -115,12 +115,18 @@ const StudyNow = () => {
     if (items[currentIndex].rate === '0') {
       setCartCategoryText('New card')
       setLabelInfo(true)
+      setLabelWarning(false)
+      setLabelSuccess(false)
     } else if (items[currentIndex].rate === '1') {
       setCartCategoryText('Learning card')
       setLabelWarning(true)
+      setLabelInfo(false)
+      setLabelSuccess(false)
     } else {
       setCartCategoryText('Reviewing card')
       setLabelSuccess(true)
+      setLabelInfo(false)
+      setLabelWarning(false)
     }
 
     // Cardnii button deerh hugatsaanuudiin tootsoololuudiig gargaj irne.

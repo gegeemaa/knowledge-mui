@@ -202,12 +202,18 @@ const List = () => {
     if (knowledge.rate == 0) {
       setCartCategoryText('New card')
       setLabelInfo(true)
+      setLabelWarning(false)
+      setLabelSuccess(false)
     } else if (knowledge.rate == 1) {
       setCartCategoryText('Learning card')
       setLabelWarning(true)
+      setLabelInfo(false)
+      setLabelSuccess(false)
     } else {
       setCartCategoryText('Reviewing card')
       setLabelSuccess(true)
+      setLabelInfo(false)
+      setLabelWarning(false)
     }
   }
 
