@@ -26,6 +26,8 @@ import StudyNow from './StudyNow'
 import InfoStudyCard from './InfoStudyCard'
 import WbIncandescentIcon from '@material-ui/icons/WbIncandescent'
 import HomeIcon from '@material-ui/icons/Home'
+import Add from './Add'
+import Home from './Home'
 
 const drawerWidth = 240
 
@@ -145,7 +147,7 @@ export default function App() {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" noWrap>
-              Knowledge project
+              Note memorizing
             </Typography>
           </Toolbar>
         </AppBar>
@@ -168,16 +170,22 @@ export default function App() {
           </div>
           <Divider />
           <List>
+            <ListItemLink to="/Home" primary="Home" icon={<HomeIcon />} />
+          </List>
+          <List>
+            <ListItemLink to="/Add" primary="Add note" icon={<AddIcon />} />
+          </List>
+          <List>
             <ListItemLink
               to="/list"
-              primary="List"
+              primary="Manage notes"
               icon={<FormatListNumberedIcon />}
             />
           </List>
           <List>
             <ListItemLink
               to="/InfoStudyCard"
-              primary="Play card"
+              primary="Work on notes"
               icon={<WbIncandescentIcon />}
             />
           </List>
@@ -188,7 +196,9 @@ export default function App() {
           })}>
           <div className={classes.drawerHeader} />
           <Switch>
-            <Route exact path="/" component={ListKnowledges} />
+            <Route exact path="/" component={Home} />
+            <Route path="/home" component={Home} />
+            <Route path="/add" component={Add} />
             <Route path="/list" component={ListKnowledges} />
             <Route path="/InfoStudyCard" component={InfoStudyCard} />
             <Route path="/StudyNow" component={StudyNow} />

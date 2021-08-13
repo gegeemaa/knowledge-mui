@@ -114,10 +114,10 @@ const StudyNow = () => {
     // console.log('Lenth' + items.length)
     if (items[currentIndex].rate === '0') {
       setCartCategoryText('New card')
-      setLabelWarning(true)
+      setLabelInfo(true)
     } else if (items[currentIndex].rate === '1') {
       setCartCategoryText('Learning card')
-      setLabelInfo(true)
+      setLabelWarning(true)
     } else {
       setCartCategoryText('Reviewing card')
       setLabelSuccess(true)
