@@ -38,8 +38,9 @@ const useStyles = makeStyles({
     lineHeight: '1',
   },
   // card category style
-  warning: { backgroundColor: '#f0ad4e' },
   info: { backgroundColor: '#5bc0de' },
+  warning: { backgroundColor: '#f0ad4e' },
+
   success: { backgroundColor: '#04AA6D' },
 })
 

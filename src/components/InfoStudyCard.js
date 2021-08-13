@@ -106,17 +106,17 @@ export default function InfoStudyCard() {
       <table className={classes.table}>
         <tr>
           <td className={classes.td}>New</td>
-          <td style={{ color: 'blue', fontWeight: 'bold' }}>{countOfNew}</td>
+          <td style={{ color: '#5bc0de', fontWeight: 'bold' }}>{countOfNew}</td>
         </tr>
         <tr>
           <td>Learning</td>
-          <td style={{ color: 'orange', fontWeight: 'bold' }}>
+          <td style={{ color: '#f0ad4e', fontWeight: 'bold' }}>
             {countOfLearning}
           </td>
         </tr>
         <tr>
           <td>Reviewing</td>
-          <td style={{ color: 'green', fontWeight: 'bold' }}>
+          <td style={{ color: '#04AA6D', fontWeight: 'bold' }}>
             {countOfReviewing}
           </td>
         </tr>
