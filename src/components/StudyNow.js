@@ -15,6 +15,8 @@ import NewCardButtons from './category/NewCardButtons'
 import LearningCardButtons from './category/LearningCardButtons'
 import ReviewCardButtons from './category/ReviewCardButtons'
 import useStyles from '../styles/styles'
+import Editor from 'rich-markdown-editor'
+
 // import { next } from '../functions/functions'
 
 const StudyNow = () => {
@@ -240,7 +242,12 @@ const StudyNow = () => {
 
           {answerDisplay && (
             <div>
-              <div id="body">{items[currentIndex].body}</div>
+              {/* <div id="body">{items[currentIndex].body}</div> */}
+              <Editor
+                // id="body"
+                defaultValue={items[currentIndex].body}
+                readOnly={true}
+              />
               <br></br>
               <span
                 className={clsx(

@@ -87,6 +87,7 @@ const List = () => {
   const [labelWarning, setLabelWarning] = useState(false)
   const [labelInfo, setLabelInfo] = useState(false)
   const [labelSuccess, setLabelSuccess] = useState(false)
+  const [key, setKey] = useState(0)
 
   let data = []
   var period = 1
@@ -215,6 +216,7 @@ const List = () => {
       setLabelInfo(false)
       setLabelWarning(false)
     }
+    setKey(v => v + 1)
   }
 
   const handleCancel = () => {
@@ -325,7 +327,7 @@ const List = () => {
                 </p>
 
                 <br />
-                <Editor value={value.body} readOnly={true} />
+                <Editor key={key} defaultValue={value.body} readOnly={true} />
               </div>
             ) : (
               <Alert severity="info">
