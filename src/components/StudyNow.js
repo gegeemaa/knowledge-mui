@@ -44,6 +44,7 @@ const StudyNow = () => {
   const [labelWarning, setLabelWarning] = useState(false)
   const [labelInfo, setLabelInfo] = useState(false)
   const [labelSuccess, setLabelSuccess] = useState(false)
+  const [key, setKey] = useState(0)
 
   // eniig daraa ni tusdaa component bolgoh
   useEffect(() => {
@@ -150,6 +151,8 @@ const StudyNow = () => {
       setDelayTimeButtonEasyText(delayTimeTextEasy)
     }
     console.log('cartCategoryText: ', cartCategoryText)
+    // Editor-oo reset hiihiin tuld
+    setKey(v => v + 1)
   }
 
   const next = (buttonName, cardCategory) => {
@@ -242,23 +245,6 @@ const StudyNow = () => {
 
           {answerDisplay && (
             <div>
-              {/* <div id="body">{items[currentIndex].body}</div> */}
-              <Editor
-                // id="body"
-                defaultValue={items[currentIndex].body}
-                readOnly={true}
-              />
-              <br></br>
-              <span
-                className={clsx(
-                  classes.label,
-                  labelWarning && classes.warning,
-                  labelInfo && classes.info,
-                  labelSuccess && classes.success
-                )}>
-                {cartCategoryText}
-              </span>
-
               {items[currentIndex].rate === '0' && (
                 <NewCardButtons
                   cardCategory={items[currentIndex].rate}
@@ -280,6 +266,26 @@ const StudyNow = () => {
                   onClick={next}
                 />
               )}
+              <br />
+              <p>
+                <span
+                  className={clsx(
+                    classes.label,
+                    labelWarning && classes.warning,
+                    labelInfo && classes.info,
+                    labelSuccess && classes.success
+                  )}>
+                  {cartCategoryText}
+                </span>
+              </p>
+
+              <Editor
+                // id="body"
+                key={key}
+                defaultValue={items[currentIndex].body}
+                readOnly={true}
+                className={classes.editor}
+              />
             </div>
           )}
         </div>

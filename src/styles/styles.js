@@ -42,6 +42,9 @@ const useStyles = makeStyles({
   warning: { backgroundColor: '#f0ad4e' },
 
   success: { backgroundColor: '#04AA6D' },
+  editor: {
+    paddingLeft: '5px',
+  },
 })
 
 export default useStyles
