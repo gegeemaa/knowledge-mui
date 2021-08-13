@@ -1,5 +1,6 @@
 import { React, useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import clsx from 'clsx'
 import Editor from 'rich-markdown-editor'
 import axios from '../axios-knowledges'
 import { makeStyles } from '@material-ui/core/styles'
@@ -58,6 +59,19 @@ const useStyles = makeStyles({
   radio: {
     display: 'inline',
   },
+  label: {
+    padding: '.2em .6em .3em',
+    color: 'white',
+    fontWeight: 'bold',
+    borderRadius: '15px',
+    fontSize: '85%',
+    // lineHeight: '1',
+  },
+  // card category style
+  info: { backgroundColor: '#5bc0de' },
+  warning: { backgroundColor: '#f0ad4e' },
+
+  success: { backgroundColor: '#04AA6D' },
 })
 
 const List = () => {
@@ -67,6 +81,11 @@ const List = () => {
   const [items, setItems] = useState(knowledges)
   const [filter, setFilter] = useState('All')
   const [buttonText, setButtonText] = useState('')
+
+  const [cartCategoryText, setCartCategoryText] = useState('')
+  const [labelWarning, setLabelWarning] = useState(false)
+  const [labelInfo, setLabelInfo] = useState(false)
+  const [labelSuccess, setLabelSuccess] = useState(false)
 
   // const [buttonText, setButtonText] = useState('Update')
   let data = []
@@ -181,14 +200,14 @@ const List = () => {
   const seeItem = knowledge => {
     setValue(knowledge)
     if (knowledge.rate == 0) {
-      setSeverity('info')
-      setSeverityMessege('New')
+      setCartCategoryText('New card')
+      setLabelInfo(true)
     } else if (knowledge.rate == 1) {
-      setSeverity('success')
-      setSeverityMessege('Good')
+      setCartCategoryText('Learning card')
+      setLabelWarning(true)
     } else {
-      setSeverity('warning')
-      setSeverityMessege('Bad')
+      setCartCategoryText('Reviewing card')
+      setLabelSuccess(true)
     }
   }
 
@@ -284,11 +303,22 @@ const List = () => {
           <Paper className={classes.paper}>
             {value !== null ? (
               <div>
-                <h3>{value.delay_time.slice(0, 10)}</h3>
+                <h3>Study date: {value.delay_time.slice(0, 10)}</h3>
                 <h3>{value.title}</h3>
-                {/* {value.body} */}
+                <p>
+                  <span
+                    className={clsx(
+                      classes.label,
+                      labelWarning && classes.warning,
+                      labelInfo && classes.info,
+                      labelSuccess && classes.success
+                    )}>
+                    {cartCategoryText}
+                  </span>
+                </p>
+
+                <br />
                 <Editor value={value.body} readOnly={true} />
-                <Alert severity={severity}>{severityMessege}</Alert>
               </div>
             ) : (
               ''
