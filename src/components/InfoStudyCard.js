@@ -56,8 +56,6 @@ export default function InfoStudyCard() {
     history.push('./StudyNow')
   }
 
-  console.log('HELLO:')
-
   useEffect(() => {
     axios
       .get('/knowledges.json')
@@ -77,7 +75,6 @@ export default function InfoStudyCard() {
             delay_time: el[1].delay_time,
           }))
           .filter(x => new Date() >= new Date(x.delay_time))
-        console.log(data)
         setCountOfNew(data.filter(x => x.rate == '0').length)
         setCountOfLearning(data.filter(x => x.rate == '1').length)
       })

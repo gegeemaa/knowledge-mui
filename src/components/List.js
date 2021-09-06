@@ -20,11 +20,7 @@ import {
   Paper,
   Button,
 } from '@material-ui/core'
-import {
-  enterMultiple,
-  deleteRow,
-  // updateRow,
-} from '../redux/actions/knowledgeActions'
+import { enterMultiple, deleteRow } from '../redux/actions/knowledgeActions'
 import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
 import AddIcon from '@material-ui/icons/Add'
@@ -33,9 +29,6 @@ import Modal from './Modal'
 import Grid from '@material-ui/core/Grid'
 import Alert from '@material-ui/lab/Alert'
 import { TrendingUpOutlined } from '@material-ui/icons'
-// import getKnowledges from '../thunk/getKnowledges'
-
-// import InputForm from '../../components/form'
 
 const useStyles = makeStyles({
   table: {
@@ -108,7 +101,6 @@ const List = () => {
       .then(response => {
         //Object-iig array-ruu horvuuleh
         const arr = Object.entries(response.data)
-        // console.log(arr)
         // map() ni array-aas shine array uusgeh function yum.
         data = arr.map(el => ({
           id: el[0],
@@ -121,7 +113,6 @@ const List = () => {
           delay_time: el[1].delay_time,
         }))
 
-        console.log('LISTees hevlej bna')
         // string-iig date-ryy horvuuleed sortloj bna.
         const sortedData = data
           .slice()
@@ -152,19 +143,13 @@ const List = () => {
   const daysDiff = (period, date) => {
     const today = new Date()
     var diffDays = parseInt((today - date) / (1000 * 60 * 60 * 24), 10)
-    // console.log("diffDays" + diffDays);
     return diffDays === period
   }
   const createData = (id, date, title, body, topic) => {
     return { id, date, title, body, topic }
   }
 
-  // console.log('Items:')
-  // console.log(items)
   const rows = items.filter(FILTER_MAP[filter])
-
-  // console.log('ROW')
-  // console.log(rows)
 
   const handleChange = evt => {
     var filter = evt.target.value
@@ -255,7 +240,6 @@ const List = () => {
                   </TableCell>
                   <TableCell className={classes.tableTitle}>Title</TableCell>
                   <TableCell className={classes.tableTitle}>Topic</TableCell>
-                  {/* <TableCell>Created date</TableCell> */}
                   <TableCell className={classes.tableTitle} align="right">
                     Action
                   </TableCell>
@@ -268,10 +252,6 @@ const List = () => {
                     {/* <TableCell>{knowledge.delay_time}</TableCell> */}
                     <TableCell size="small">{knowledge.title}</TableCell>
                     <TableCell>{knowledge.topic}</TableCell>
-
-                    {/* <TableCell component="th" scope="row">
-                      {knowledge.date}
-                    </TableCell> */}
                     <TableCell align="right">
                       <a onClick={() => seeItem(knowledge)}>
                         <VisibilityIcon

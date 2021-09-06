@@ -1,8 +1,4 @@
 const initialState = {
-  // date: '',
-  // title: '',
-  // body: '',
-  // topic: '',
   list: [],
 }
 

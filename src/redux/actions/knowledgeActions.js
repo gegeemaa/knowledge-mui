@@ -7,8 +7,6 @@ export const enter = state => {
     body: state.body,
     topic: state.topic,
     rate: state.rate,
-
-    // rate: rate.state,
   }
 }
 export const enterMultiple = state => {
@@ -24,14 +22,12 @@ export const deleteRow = id => {
   }
 }
 export const updateRow = state => {
-  console.log('UPdatestate', state)
   return {
     type: 'UPDATE',
     payload: state,
   }
 }
 export const updateID = state => {
-  // console.log('UPdatestate', state)
   return {
     type: 'UPDATEID',
     payload: state,

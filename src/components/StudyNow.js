@@ -3,17 +3,11 @@ import clsx from 'clsx'
 import { useSelector, useDispatch } from 'react-redux'
 import axios from '../axios-knowledges'
 import { Paper, Button } from '@material-ui/core'
-import {
-  enterMultiple,
-  // deleteRow,
-  // updateRow,
-} from '../redux/actions/knowledgeActions'
+import { enterMultiple } from '../redux/actions/knowledgeActions'
 import NewCardButtons from './category/NewCardButtons'
 import LearningCardButtons from './category/LearningCardButtons'
 import useStyles from '../styles/styles'
 import Editor from 'rich-markdown-editor'
-
-// import { next } from '../functions/functions'
 
 const StudyNow = () => {
   const dispatch = useDispatch()
@@ -23,7 +17,6 @@ const StudyNow = () => {
   const [answerDisplay, setAnswerDisplay] = useState(false)
   const [currentIndex, setIndex] = useState(0)
   const [answer, setAnswer] = useState('')
-  const [delayTime, setDelayTime] = useState('')
 
   let today = new Date()
 
@@ -69,8 +62,6 @@ const StudyNow = () => {
       .catch(error => {
         // console.log(error)
       })
-
-    console.log('StudyNow-aas hevlej bna.')
   }, [])
 
   useEffect(() => {
@@ -80,7 +71,6 @@ const StudyNow = () => {
 
   const showAnswer = argument => {
     setAnswerDisplay(true)
-    // console.log('Lenth' + items.length)
     if (items[currentIndex].rate === '0') {
       setCartCategoryText('New card')
       setLabelInfo(true)
@@ -99,8 +89,6 @@ const StudyNow = () => {
   const next = (buttonName, cardCategory) => {
     setIndex(currentIndex + 1)
     setAnswerDisplay(false)
-    console.log('GOGO:')
-    console.log(buttonName, cardCategory)
 
     let changedDate
     //CardCategory is new
@@ -127,11 +115,6 @@ const StudyNow = () => {
       today.setDate(changedDate)
     }
 
-    // console.log('TODAY +', today)
-    // const delayTimesonin = today.toString().slice(0, 21)
-    const delayTimeUpdated = today.toISOString().slice(0, 19)
-    // console.log(delayTimeUpdated.slice())
-    setDelayTime(delayTimeUpdated)
     // // send data to Firebase database
     axios
       .put('/knowledges/' + items[currentIndex].id + '.json', {
@@ -140,7 +123,6 @@ const StudyNow = () => {
         rate: cardCategory,
       })
       .then(response => {})
-    // console.log('Hello')
   }
 
   if (items.length === 0) {
@@ -152,9 +134,7 @@ const StudyNow = () => {
   } else if (currentIndex >= items.length) {
     return (
       <Paper className={classes.paper}>
-        <p className={classes.fontBold}>
-          Card-iig ajillaj duuslaa. Bayarlalaa!
-        </p>
+        <p className={classes.fontBold}>The note is finished. Thank you!</p>
       </Paper>
     )
   } else {

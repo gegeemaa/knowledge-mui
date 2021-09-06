@@ -169,10 +169,6 @@ const InputForm = ({ buttonText, value, handleCancel }) => {
           {/* {MenuItemEgen} */}
         </Select>
       </FormControl>
-
-      {/* <Button color="primary" onClick={onFinish} margin="dense">
-        {buttonText}
-      </Button> */}
       <div className={classes.submitButton}>
         <Button onClick={onFinish} color="primary">
           {buttonText}
