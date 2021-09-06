@@ -7,10 +7,9 @@ const text = `
 
 This application is dedicated to register notes or anything you are learning and memorize them according to specific rules which are based on brain scientience. Application is inspired by Anki or rules to remember are similar to Ankis rules.
 
-Notes are divided into the following 3 categories:
+Notes are divided into the following 2 categories:
   1. New notes
   2. Learning notes
-  3. Reviewing notes
 
 When you click on the "Work on notes" menu, the number of notes on which to work today and their categories will be shown. When you continue by clicking on the "Study now" button, the first note's title will be shown by giving you some time to think about the answer. By clicking on the "Show answer" button, a related answer should be shown. Depending on how your answer you have thought matches with the answer, you should grade your note. Grading notes means that you will decide after how much time notes will be shown. Let's call this time "Waiting time."
  
@@ -26,15 +25,6 @@ If you grade the note as "easy", it's category will be changed to "Learning".
   - again (1minute)
   - good (1 day)
   - easy (4 days)
-If you grade that note's waiting time is more than 1 day, it's category will be changed to "Reviewing".
-
-**Reviewing**: It is a note that you finished learning and need to review again in order to prevent forgetting. It has the following grading buttons.
-
-  - again (10 minutes)
-  - Hard (previous waiting time / 2)
-  - good (previous waiting time * 2)
-  - easy (previous waiting time * 3)
-
 `
 const useStyles = makeStyles(theme => ({
   paper: {

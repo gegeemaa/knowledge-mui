@@ -9,7 +9,6 @@ export const updateFunction = (
   topic,
   rate,
   delay_time,
-  delay_time_ms,
   user_id,
   dispatch
 ) => {
@@ -22,7 +21,6 @@ export const updateFunction = (
       topic,
       rate,
       delay_time,
-      delay_time_ms,
       user_id,
     }
     dispatch(updateRow(knowledge))

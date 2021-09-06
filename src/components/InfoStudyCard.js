@@ -25,10 +25,9 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 const text = `
-Notes are divided into the following 3 categories:
+Notes are divided into the following 2 categories:
   1. New notes
   2. Learning notes
-  3. Reviewing notes
 
 The above number of cards on which to work today is shown with related categories. When you continue by clicking on the "Study now" button, the first note's title will be shown by giving you some time to think about the answer. By clicking on the "Show answer" button, a related answer should be shown. Depending on how your answer you have thought matches with the answer, you should grade your note. Grading notes means that you will decide after how much time notes will be shown. Let's call this time "Waiting time."
  
@@ -44,15 +43,6 @@ If you grade the note as "easy", it's category will be changed to "Learning".
   - again (1minute)
   - good (1 day)
   - easy (4 days)
-If you grade that note's waiting time is more than 1 day, it's category will be changed to "Reviewing".
-
-**Reviewing**: It is a note that you finished learning and need to review again in order to prevent forgetting. It has the following grading buttons.
-
-  - again (10 minutes)
-  - Hard (previous waiting time / 2)
-  - good (previous waiting time * 2)
-  - easy (previous waiting time * 3)
-
 `
 
 export default function InfoStudyCard() {
@@ -61,7 +51,6 @@ export default function InfoStudyCard() {
   let data
   const [countOfNew, setCountOfNew] = useState()
   const [countOfLearning, setCountOfLearning] = useState()
-  const [countOfReviewing, setCountOfReviewing] = useState()
 
   function handleClick() {
     history.push('./StudyNow')
@@ -89,12 +78,8 @@ export default function InfoStudyCard() {
           }))
           .filter(x => new Date() >= new Date(x.delay_time))
         console.log(data)
-        // countOfNew = data.filter(x => x.rate == '0').length
-        // countOfLearning = data.filter(x => x.rate == '1').length
-        // countOfReviewing = data.filter(x => x.rate == '2').length
         setCountOfNew(data.filter(x => x.rate == '0').length)
         setCountOfLearning(data.filter(x => x.rate == '1').length)
-        setCountOfReviewing(data.filter(x => x.rate == '2').length)
       })
       .catch(error => {
         // console.log(error)
@@ -112,12 +97,6 @@ export default function InfoStudyCard() {
           <td>Learning</td>
           <td style={{ color: '#f0ad4e', fontWeight: 'bold' }}>
             {countOfLearning}
-          </td>
-        </tr>
-        <tr>
-          <td>Reviewing</td>
-          <td style={{ color: '#04AA6D', fontWeight: 'bold' }}>
-            {countOfReviewing}
           </td>
         </tr>
       </table>

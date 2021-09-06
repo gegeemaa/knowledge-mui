@@ -183,9 +183,6 @@ const List = () => {
 
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState(null)
-  const [severity, setSeverity] = useState('')
-  const [severityMessege, setSeverityMessege] = useState('')
-  // let severity = ''
 
   const openItem = knowledge => {
     if (knowledge !== null) {
@@ -205,16 +202,11 @@ const List = () => {
       setLabelInfo(true)
       setLabelWarning(false)
       setLabelSuccess(false)
-    } else if (knowledge.rate == 1) {
+    } else {
       setCartCategoryText('Learning card')
       setLabelWarning(true)
       setLabelInfo(false)
       setLabelSuccess(false)
-    } else {
-      setCartCategoryText('Reviewing card')
-      setLabelSuccess(true)
-      setLabelInfo(false)
-      setLabelWarning(false)
     }
     setKey(v => v + 1)
   }
@@ -231,7 +223,7 @@ const List = () => {
         onClick={() => openItem(null)}>
         <AddIcon fontSize="small" /> Add note
       </Button>
-      &nbsp; &nbsp;
+      &nbsp; &nbsp;&nbsp; &nbsp;
       <FormControl component="fieldset">
         <FormLabel component="legend" className={classes.radio}>
           Filter by created date:
@@ -273,6 +265,7 @@ const List = () => {
                 {rows.map(knowledge => (
                   <TableRow key={knowledge.id}>
                     <TableCell>{knowledge.delay_time.slice(0, 10)}</TableCell>
+                    {/* <TableCell>{knowledge.delay_time}</TableCell> */}
                     <TableCell size="small">{knowledge.title}</TableCell>
                     <TableCell>{knowledge.topic}</TableCell>
 

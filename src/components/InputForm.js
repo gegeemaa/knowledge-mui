@@ -51,7 +51,6 @@ const InputForm = ({ buttonText, value, handleCancel }) => {
   const [topic, setTopic] = useState(value !== null ? value.topic : '')
   const [rate, setRate] = useState(value !== null ? value.rate : '0')
   let delay_time = value !== null ? value.delay_time : ''
-  let delay_time_ms = value !== null ? value.delay_time_ms : '0'
   let user_id = value !== null ? value.user_id : ''
 
   const dispatch = useDispatch()
@@ -83,7 +82,6 @@ const InputForm = ({ buttonText, value, handleCancel }) => {
         topic,
         rate,
         delay_time,
-        delay_time_ms,
         user_id,
         dispatch
       )
@@ -167,9 +165,6 @@ const InputForm = ({ buttonText, value, handleCancel }) => {
           </MenuItem>
           <MenuItem value="1" disabled>
             Learning
-          </MenuItem>
-          <MenuItem value="2" disabled>
-            Reviewing
           </MenuItem>
           {/* {MenuItemEgen} */}
         </Select>
