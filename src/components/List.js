@@ -50,6 +50,9 @@ const useStyles = makeStyles({
   tableTitle: {
     fontWeight: 'bold',
   },
+  tableBodyTitle: {
+    width: '40%',
+  },
   radio: {
     display: 'inline',
   },
@@ -250,7 +253,9 @@ const List = () => {
                   <TableRow key={knowledge.id}>
                     <TableCell>{knowledge.delay_time.slice(0, 10)}</TableCell>
                     {/* <TableCell>{knowledge.delay_time}</TableCell> */}
-                    <TableCell size="small">{knowledge.title}</TableCell>
+                    <TableCell className={classes.tableBodyTitle} size="small">
+                      {knowledge.title}
+                    </TableCell>
                     <TableCell>{knowledge.topic}</TableCell>
                     <TableCell align="right">
                       <a onClick={() => seeItem(knowledge)}>
