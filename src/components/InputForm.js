@@ -43,7 +43,7 @@ const InputForm = ({ buttonText, value, handleCancel }) => {
   console.log('value' + value)
   const id = value !== null ? value.id : null
   const today = new Date()
-  const todayString = today.toISOString().slice(0, 10)
+  const todayString = today.toISOString()
   const [key, setKey] = useState(0)
   const [date, setDate] = useState(value !== null ? value.date : todayString)
   const [title, setTitle] = useState(value !== null ? value.title : '')
@@ -69,7 +69,7 @@ const InputForm = ({ buttonText, value, handleCancel }) => {
     }
   }
   const changeDate = date => {
-    setDate(date !== null ? date.toISOString().slice(0, 10) : null)
+    setDate(date !== null ? date.toISOString() : null)
   }
   const onFinish = () => {
     // updateFunction function-iin parameter-eer form-iin valuenuudaas gadna id-g nemj yavuulj bna.
@@ -144,9 +144,6 @@ const InputForm = ({ buttonText, value, handleCancel }) => {
             setBody(value())
           }}
           defaultValue={body}
-          // theme={{
-          //   light: theme.light,
-          // }}
         />
       </FormControl>
       <FormControl variant="outlined" className={classes.formControl}>

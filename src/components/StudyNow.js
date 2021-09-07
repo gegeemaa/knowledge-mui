@@ -8,6 +8,7 @@ import NewCardButtons from './category/NewCardButtons'
 import LearningCardButtons from './category/LearningCardButtons'
 import useStyles from '../styles/styles'
 import Editor from 'rich-markdown-editor'
+import { format, toDate } from 'date-fns'
 
 const StudyNow = () => {
   const dispatch = useDispatch()
@@ -114,12 +115,11 @@ const StudyNow = () => {
       changedDate = today.getDate() + 4
       today.setDate(changedDate)
     }
-
     // // send data to Firebase database
     axios
       .put('/knowledges/' + items[currentIndex].id + '.json', {
         ...items[currentIndex],
-        delay_time: today.toISOString().slice(0, 19),
+        delay_time: today.toISOString(),
         rate: cardCategory,
       })
       .then(response => {})
@@ -128,7 +128,7 @@ const StudyNow = () => {
   if (items.length === 0) {
     return (
       <Paper className={classes.paper}>
-        <p>There is not value.</p>
+        <p>There is not note to work.</p>
       </Paper>
     )
   } else if (currentIndex >= items.length) {

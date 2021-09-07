@@ -29,6 +29,7 @@ import Modal from './Modal'
 import Grid from '@material-ui/core/Grid'
 import Alert from '@material-ui/lab/Alert'
 import { TrendingUpOutlined } from '@material-ui/icons'
+import { format, toDate } from 'date-fns'
 
 const useStyles = makeStyles({
   table: {
@@ -112,9 +113,11 @@ const List = () => {
           body: el[1].body,
           topic: el[1].topic,
           rate: el[1].rate,
-          // delay_time: new Date(el[1].delay_time),
           delay_time: el[1].delay_time,
         }))
+
+        console.log(data)
+        console.log(new Date('2021-09-07T14:11:40.342Z'))
 
         // string-iig date-ryy horvuuleed sortloj bna.
         const sortedData = data
@@ -252,7 +255,6 @@ const List = () => {
                 {rows.map(knowledge => (
                   <TableRow key={knowledge.id}>
                     <TableCell>{knowledge.delay_time.slice(0, 10)}</TableCell>
-                    {/* <TableCell>{knowledge.delay_time}</TableCell> */}
                     <TableCell className={classes.tableBodyTitle} size="small">
                       {knowledge.title}
                     </TableCell>

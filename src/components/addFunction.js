@@ -12,7 +12,7 @@ export const addFunction = (id, date, title, body, topic, rate, dispatch) => {
       topic,
       rate,
       user_id: 'GEREL_85',
-      delay_time: today.toISOString().slice(0, 19),
+      delay_time: today.toISOString(),
     }
     // redux-ruu yavuulj bna
     dispatch(enter(knowledge))
