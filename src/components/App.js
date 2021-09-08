@@ -28,6 +28,7 @@ import WbIncandescentIcon from '@material-ui/icons/WbIncandescent'
 import HomeIcon from '@material-ui/icons/Home'
 import Add from './Add'
 import Home from './Home'
+import GitHubIcon from '@material-ui/icons/GitHub'
 
 const drawerWidth = 240
 
@@ -149,6 +150,13 @@ export default function App() {
             <Typography variant="h6" noWrap>
               Note memorizing
             </Typography>
+            &nbsp; &nbsp;
+            <a
+              href="https://github.com/gegeemaa/knowledge-mui"
+              target="_blank"
+              style={{ color: 'white' }}>
+              <GitHubIcon />
+            </a>
           </Toolbar>
         </AppBar>
         <Drawer

@@ -2,6 +2,7 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { Paper, Grid } from '@material-ui/core'
 import Editor from 'rich-markdown-editor'
+import GitHubIcon from '@material-ui/icons/GitHub'
 const text = `
 ## Welcome to the "Note memorizing" application!
 
@@ -39,6 +40,9 @@ export default function Home() {
   return (
     <Paper className={classes.paper}>
       <Editor defaultValue={text} readOnly={true} />
+      <a href="https://github.com/gegeemaa/knowledge-mui" target="_blank">
+        <GitHubIcon />
+      </a>
     </Paper>
   )
 }
